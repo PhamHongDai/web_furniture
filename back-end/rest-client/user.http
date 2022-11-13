@@ -1,0 +1,40 @@
+# update by Admin
+POST http://localhost:5000/api/user/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZlNGZjNmU4OGQwYzY4NGMxOTdkNzAiLCJlbWFpbCI6InN1cGVyanVuaW9yMkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY2MDgzMzczNSwiZXhwIjoxNjYzNDI1NzM1fQ.5Y15TldFvyqQ-DWdJ4Pq_sMjZShEkcDVEbdA2njl0Xs
+
+{
+    "user": "3123213213",
+    "name": "Tan Dz"
+}
+
+# update by User
+###################################################
+POST  http://localhost:5000/api/user/updateUserInfo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZlNGZjNmU4OGQwYzY4NGMxOTdkNzAiLCJlbWFpbCI6InN1cGVyanVuaW9yMkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY2MDgzMzczNSwiZXhwIjoxNjYzNDI1NzM1fQ.5Y15TldFvyqQ-DWdJ4Pq_sMjZShEkcDVEbdA2njl0Xs
+
+{
+    "name": "Tan 2k2",
+    "password": "daylamatkhau",
+    "otp": "123121"
+}
+
+# Delete by Admin
+###################################################
+POST  http://localhost:5000/api/user/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzAyMzNiNGUwZGVjYzFhYzBmZWFiOWEiLCJlbWFpbCI6ImFkbWluc29uQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY2MTE1NTgyOSwiZXhwIjoxNjYzNzQ3ODI5fQ.4BxdBhnNdpBD8YJ-l0alIt6-R0eBQFE6T5b_qgW7aGs
+{
+    "_id": "62fe263a1510bd0cf4809c65"
+}
+
+# get all user
+###################################################
+POST  http://localhost:5000/api/user/getUsers
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZlNGZjNmU4OGQwYzY4NGMxOTdkNzAiLCJlbWFpbCI6InN1cGVyanVuaW9yMkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY2MDgzMzczNSwiZXhwIjoxNjYzNDI1NzM1fQ.5Y15TldFvyqQ-DWdJ4Pq_sMjZShEkcDVEbdA2njl0Xs
+
+{
+    "_id": "62faf1a3fe1c8b4df4c0353b"
+}

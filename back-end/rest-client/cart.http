@@ -1,0 +1,31 @@
+POST http://localhost:5000/api/cart/addToCart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZhZjJkZTUxMGJmMDMzMDgwMTAwYzYiLCJlbWFpbCI6ImRhbW5AZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjEwNTA4MTUsImV4cCI6MTY2MzY0MjgxNX0.4cm6mjhtMEE76dOXTkZAipFeuTQeU5Ji7Vp1DEEbZVg
+
+{
+    "cartItem": {
+        "product": "62fd0c078e9fa41100933098",
+        "variant": "62fd0c078e9fa41100933099",
+        "quantity": 6
+    }
+}
+
+###################################################
+GET  http://localhost:5000/api/cart/getCartItems
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZhZjJkZTUxMGJmMDMzMDgwMTAwYzYiLCJlbWFpbCI6ImRhbW5AZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjEwNTA4MTUsImV4cCI6MTY2MzY0MjgxNX0.4cm6mjhtMEE76dOXTkZAipFeuTQeU5Ji7Vp1DEEbZVg
+
+{
+}
+
+###################################################
+POST  http://localhost:5000/api/cart/removeItem
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZlNGZjNmU4OGQwYzY4NGMxOTdkNzAiLCJlbWFpbCI6InN1cGVyanVuaW9yMkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY2MDgzMzczNSwiZXhwIjoxNjYzNDI1NzM1fQ.5Y15TldFvyqQ-DWdJ4Pq_sMjZShEkcDVEbdA2njl0Xs
+
+{
+    "cartItem": {
+        "product": "62fd0c078e9fa41100933098",
+        "variant": "62fd0c078e9fa41100933099"
+    } 
+}

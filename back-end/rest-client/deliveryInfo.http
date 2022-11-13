@@ -1,0 +1,37 @@
+POST http://localhost:5000/api/deliveryInfo/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZjYWE3M2E1OGFiMjQ2ODA4MjU1M2QiLCJlbWFpbCI6ImFiY2RkYWkxMjNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjA4MDMzNzksImV4cCI6MTY2MzM5NTM3OX0.Xu_8TehZm_uDLEs8feDBXwPHi-JWh4CkmTGJ81Uo_a0
+
+{
+    "address": {
+        "name": "Nguoi nao do 1",
+        "phoneNumber": "09291921312",
+        "address": "Thu Duc, Kon Tu 1212m 33"
+    }
+}
+
+###################################################
+GET  http://localhost:5000/api/deliveryInfo/get
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZjYWE3M2E1OGFiMjQ2ODA4MjU1M2QiLCJlbWFpbCI6ImFiY2RkYWkxMjNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjA4MDMzNzksImV4cCI6MTY2MzM5NTM3OX0.Xu_8TehZm_uDLEs8feDBXwPHi-JWh4CkmTGJ81Uo_a0
+
+{
+}
+
+###################################################
+POST  http://localhost:5000/api/deliveryInfo/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZjYWE3M2E1OGFiMjQ2ODA4MjU1M2QiLCJlbWFpbCI6ImFiY2RkYWkxMjNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjA4MDMzNzksImV4cCI6MTY2MzM5NTM3OX0.Xu_8TehZm_uDLEs8feDBXwPHi-JWh4CkmTGJ81Uo_a0
+
+{
+    "addressId": "62fdde87d197f70468bab87d"
+}
+
+###################################################
+POST  http://localhost:5000/api/deliveryInfo/setDefaultDeliveryInfo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZjYWE3M2E1OGFiMjQ2ODA4MjU1M2QiLCJlbWFpbCI6ImFiY2RkYWkxMjNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjA4MDMzNzksImV4cCI6MTY2MzM5NTM3OX0.Xu_8TehZm_uDLEs8feDBXwPHi-JWh4CkmTGJ81Uo_a0
+
+{
+    "addressId": "62fd9d3cd13a374bcc15deae"
+}
