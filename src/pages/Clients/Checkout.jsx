@@ -87,7 +87,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [address, setAddress] = useState({name:'',phoneNumber:''});
+  const [address, setAddress] = useState(null);
   const orderItems = location.state.selected;
   const { deliveryInfo, loading } = useSelector((state) => state.address);
   const shippingFee = 30000;
@@ -184,7 +184,7 @@ const Checkout = () => {
             <div className="row">
               {
                 loading ? (
-                  <div className="notifi__block">Loading</div>
+                  <div className="notifi__block">Loading...</div>
                 ) : !address ? (
                   <div className="notifi__block">
                     Vui lòng thêm địa chỉ giao hàng.
@@ -210,7 +210,7 @@ const Checkout = () => {
                           onChange={(e) => handleChangeAddress(e)}
                           label={address.address}
                         >
-                        {deliveryInfo.address.map((info) => (
+                        {deliveryInfo.address?.map((info) => (
                           <option key={info._id} value={info._id}>{info.address}</option>
                         ))}
                         </select>

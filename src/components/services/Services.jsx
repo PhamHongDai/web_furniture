@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Container = styled.section`
   display: grid;
   grid-template-columns: auto auto auto auto;
-  margin: 0px 120px;
+  margin: 0px 100px;
   gap: 40px;
   .service__item{
     padding: 30px;
@@ -43,8 +43,8 @@ const Services = () => {
           <i className="ri-truck-line"/>
         </span>
         <div>
-          <h3>Free Shipping</h3>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <h3>Miễn phí vận chuyển</h3>
+          <p>Trợ phí vận chuyển</p>
         </div>
       </motion.div>
       <motion.div whileHover={{scale:1.1}} className="service__item"
@@ -53,8 +53,8 @@ const Services = () => {
           <i className="ri-refresh-line"></i>
         </span>
         <div>
-          <h3>Easy Returns</h3>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <h3>Dễ dàng trả hàng</h3>
+          <p>Hỗ trợ tận tình</p>
         </div>
       </motion.div>
       <motion.div whileHover={{scale:1.1}} className="service__item"
@@ -63,8 +63,8 @@ const Services = () => {
           <i className="ri-secure-payment-line"/>
         </span>
         <div>
-          <h3>Secure Payment</h3>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <h3>Thanh toán an toàn</h3>
+          <p>Đảm bảo an toàn</p>
         </div>
       </motion.div>
       <motion.div whileHover={{scale:1.1}} className="service__item"
@@ -73,8 +73,8 @@ const Services = () => {
           <i className="ri-exchange-dollar-line"/>
         </span>
         <div>
-          <h3>Back Guarantee</h3>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <h3>Dễ dàng hoàn tiền</h3>
+          <p>Hỗ trợ hoàn tiền</p>
         </div>
       </motion.div>
     </Container>

@@ -211,7 +211,7 @@ const ProductDetail = () => {
     } else {
       try{
         const res = await dispatch(addToCart({ cartItem: cartItem }));
-        toast.success("added to cart")
+        toast.success("Đã thêm vào giỏ hàng")
       }
       catch (error) {
         toast.error("Đã có lỗi xảy ra vui lòng thử lại");
@@ -292,7 +292,7 @@ const ProductDetail = () => {
                       ))
                     }
                   </div>
-                  <p style={{ color: "#999" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!</p>
+                  <p style={{ color: "#999" }}>Chúng tôi cung cấp cho bạn chất lượng với sự tín nhiệm hoàn hảo!</p>
                 </div>
 
                 <motion.button onClick={handleAddCart} whileHover={{ scale: 1.2 }} className="buy__btn">Add to Cart</motion.button>
@@ -307,9 +307,9 @@ const ProductDetail = () => {
           <div className="row" style={{ alignItems: "center", justifyContent: "center" }}>
             <div className="tab__wrapper">
               <h6 className={`${tab === 'desc' ? 'active__tab' : ''}`}
-                onClick={() => setTab('desc')}>Description</h6>
+                onClick={() => setTab('desc')}>Mô tả</h6>
               <h6 className={`${tab === 'rev' ? 'active__tab' : ''}`}
-                onClick={() => setTab('rev')}>Reviews({product.reviews.length})</h6>
+                onClick={() => setTab('rev')}>Đánh giá({product.reviews.length})</h6>
             </div>
           </div>
           <div className="row" style={{ marginTop: '2rem', border: '1px solid #0D324D', borderRadius: '5px', padding: '10px 10px' }}>
@@ -323,12 +323,12 @@ const ProductDetail = () => {
                     <div className="reviews__wrapper">
                       {
                         product.reviews.length === 0 ?
-                          <div>No reviews</div> :
+                          <div>Không có đánh giá</div> :
                           <ul>
                             {
                               product.reviews.map((item, index) => (
                                 <li key={index}>
-                                  <h6>{item.user.name}</h6>
+                                  <h6>{item.user?.name}</h6>
                                   <span>{item.rating}(rating)</span>
                                   <p>{item.comment}</p>
                                 </li>
@@ -346,10 +346,10 @@ const ProductDetail = () => {
             tab === 'rev' ?
               <div className="row" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div className="review__form">
-                  <h4>Leave you experience</h4>
+                  <h4>Để lại phản hồi của bạn</h4>
                   <form>
                     <div className="form__group">
-                      <input type="text" placeholder="Enter name" />
+                      <input type="text" placeholder="Tên ..." />
                     </div>
                     <div className="form__group" style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                       <span>1<i className="ri-star-s-fill"></i></span>
@@ -359,10 +359,10 @@ const ProductDetail = () => {
                       <span>5<i className="ri-star-s-fill"></i></span>
                     </div>
                     <div className="form__group">
-                      <textarea rows="4" type="text" placeholder="Review Message ..." />
+                      <textarea rows="4" type="text" placeholder="Phản hồi ..." />
                     </div>
 
-                    <button type="submit" className="buy__btn">Submit</button>
+                    <button type="submit" className="buy__btn">Gửi</button>
                   </form>
                 </div>
               </div> : <></>
@@ -371,7 +371,7 @@ const ProductDetail = () => {
       </Wrapper>
 
       <Wrapper>
-        <h2 className="related__title">You might also like</h2>
+        <h2 className="related__title">Có thể bạn sẽ thích</h2>
         <ProductList data={relatedProducts} />
       </Wrapper>
     </Helmet>

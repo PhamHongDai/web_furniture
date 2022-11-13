@@ -13,10 +13,10 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts()).unwrap();
+    dispatch(getCategories()).unwrap();
     if (isAuthenticated) {
       const fetchData = () => {
         dispatch(getCartItems());
-        dispatch(getCategories());
         dispatch(getUserAddress());
         dispatch(getOrdersByUser());
       };

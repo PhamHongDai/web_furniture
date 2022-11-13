@@ -255,8 +255,8 @@ const Header = () => {
             ) : (
               <span>
                 <div className="links__group">
-                  <Link to='/signup'>Signup</Link>
-                  <Link to='/signin'>Login</Link>
+                  <Link to='/signup'>Đăng ký</Link>
+                  <Link to='/signin'>Đăng nhập</Link>
                 </div>
               </span>
             )

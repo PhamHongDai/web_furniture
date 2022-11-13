@@ -50,7 +50,7 @@ const Container = styled.section`
   }
 `
 const Shop = () => {
-  const { products, loading } = useSelector((state) => state.product);
+  const { products } = useSelector((state) => state.product);
   const [productData, setProductData] = useState([]);
   const { categories } = useSelector((state) => state.category);
   let filterValue = "default"
@@ -87,7 +87,7 @@ const Shop = () => {
 
     return (
       <Helmet title="Shop">
-        <CommonSection title='Products'/>
+        <CommonSection title='Sản phẩm'/>
 
         <Container>
           <div className="container">
@@ -95,7 +95,7 @@ const Shop = () => {
               <div className="col">
                 <div className="filter__widget">
                   <select onChange={handleFilter}>
-                    <option value="default">Filter By Catagory</option>
+                    <option value="default">Lọc theo danh mục</option>
                     {
                       categories.map((item,index) => {
                         return (
@@ -110,16 +110,16 @@ const Shop = () => {
               <div className="col">
                 <div className="filter__widget">
                     <select>
-                      <option>Sort By</option>
-                      <option value="ascending">Ascending</option>
-                      <option value="desceding">Desceding</option>
+                      <option>Sắp xếp theo</option>
+                      <option value="ascending">Tăng dần</option>
+                      <option value="desceding">Giảm dần</option>
                     </select>
                   </div>
               </div>
 
               <div className="col">
                 <div className="search__box">
-                  <input type="text" placeholder="Search...." onChange={handleSearch}/>
+                  <input type="text" placeholder="Tìm kiếm ..." onChange={handleSearch}/>
                   <span>
                     <i className="ri-search-line"></i>
                   </span>

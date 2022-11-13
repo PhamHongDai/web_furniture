@@ -151,7 +151,7 @@ const Delivery = () => {
         isDefault: false,
       });
     } else {
-      toast.warning("Điền đủ thông tin");
+      toast.warning("Hãy điền đủ thông tin!");
     }
   };
 
@@ -169,7 +169,7 @@ const Delivery = () => {
         address: "",
       });
     } else {
-      toast.warning("Điền đủ thông tin");
+      toast.warning("Hãy điền đủ thông tin!");
     }
   };
 
@@ -207,7 +207,7 @@ const Delivery = () => {
 
           {
             loading ? (
-              <div className="notifi_block">loading...</div>
+              <div className="notifi_block">Loading...</div>
             ) : 
               deliveryInfo.address?.length === 0 || 
               deliveryInfo.address === undefined ? (

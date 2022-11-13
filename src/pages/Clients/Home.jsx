@@ -82,13 +82,11 @@ const Home = () => {
         <HeroSection>
           <HeroBanner>
             <div className="hero__content">
-                <p className="hero_subtitle">San pham hot trong nam {year}</p>
-                <h2>Make Your Interior More Minimalistic & Modern</h2>
+                <p className="hero_subtitle">Sản phẩm hot năm {year}</p>
+                <h2>Làm cho nội thất của bạn tối giản và hiện đại hơn</h2>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur, adipiscing elit.
-                    Quaerat nulla repellats quo eaque alias corporis sunt,
-                    facilis
-                    nesciunt rem fugit!
+                  Mang đến cho ngôi nhà của bạn một phong cách mới. 
+                  Sống tốt hơn, thiết kế độc đáo, đáp ứng nhu cầu của bạn!
                 </p>
                 <Link to="/shop">
                   <motion.button whileHover={{ scale:1.1 }} className="buy__btn">
@@ -104,7 +102,7 @@ const Home = () => {
         <Services/>
         <TrendingProduct>
           <TrendingContainer>
-            <h2 className="section__title">Trending Products</h2>
+            <h2 className="section__title">Sản phẩm thịnh hành</h2>
             {
               loading ? (
                 <>loading</>

@@ -110,7 +110,7 @@ const Cart = () => {
   const handleIncrement = async (cartItem, index, variantIndex) => {
     const a = cartItems?.[index].product.variants?.[variantIndex].quantity;
     if (cartItem.quantity > a) {
-      toast.warning("Số lượng tối đa!");
+      toast.warning("Số lượng đạt tối đa!");
     } else if (cartItem.quantity <= a) {
       const updateSelect = selected.map((item) => {
         if (
@@ -208,8 +208,8 @@ const Cart = () => {
     }
   };
   return (
-    <Helmet title={"Cart"}>
-      <CommonSection title="Shopping Cart" />
+    <Helmet title="Giỏ hàng">
+      <CommonSection title="Giỏ hàng" />
       <section>
         <Container>
           {
@@ -217,7 +217,7 @@ const Cart = () => {
               <>
                 {
                   loading ? (
-                    <div className="notifi_block">loading...</div>) : cartItems.length === 0 ? (
+                    <div className="notifi_block">Loading...</div>) : cartItems.length === 0 ? (
                       <div className="notifi_block">Giỏ hàng của bạn đang trống! <Link to="/shop" style={{color: "coral", textDecoration: "underline"}}>Đến mua ngay</Link></div>) : (
                     <>
                       <div className="row">
@@ -231,13 +231,13 @@ const Cart = () => {
                                   checked={isSelectedAll ? true : false}
                                   onChange={handleSelectedAll}
                                 /></th>
-                                <th>Image</th>
-                                <th style={{ width: "25%" }}>Title</th>
-                                <th>Varient</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>PriceTotal</th>
-                                <th>Delete</th>
+                                <th>Hình ảnh</th>
+                                <th style={{ width: "25%" }}>Tên</th>
+                                <th>Loại</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng giá</th>
+                                <th>Xóa</th>
                               </tr>
                             </thead>
                             <DeleteConfirm
@@ -309,16 +309,16 @@ const Cart = () => {
                         <div className="col">
                           <div className="wrap__links">
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                              <h6 style={{ fontSize: "1.4rem", fontWeight: "500", color: "#0D324D" }} >Subtotal</h6>
+                              <h6 style={{ fontSize: "1.4rem", fontWeight: "500", color: "#0D324D" }} >Tổng tiền</h6>
                               <span style={{ fontSize: "1.6rem", fontWeight: "600", color: "#0D324D" }}>{Number(totalPrice).toLocaleString("vi")}₫</span>
                             </div>
-                            <p style={{ color: "#999" }}>taxes and shipping will calculator in checkout</p>
+                            <p style={{ color: "#999" }}>Thuế và vận chuyển sẽ tính toán khi thanh toán</p>
                             <div className="group__btn">
                               <Link to='/shop'>
-                                <button className="buy__btn">Continue Shopping</button>
+                                <button className="buy__btn">Tiếp tục mua sắm</button>
                               </Link>
                               <Link to='/checkout'>
-                                <button className="buy__btn" onClick={(e) => hanldeAddToOrder(e)}>Checkout</button>
+                                <button className="buy__btn" onClick={(e) => hanldeAddToOrder(e)}>Thanh toán</button>
                               </Link>
                             </div>
                           </div>

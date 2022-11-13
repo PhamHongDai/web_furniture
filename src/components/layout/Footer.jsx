@@ -71,29 +71,28 @@ const Footer = () => {
                 </div>
               </div>
               <p className="footer__text">
-                Lorem ipsum dolor sit amet, consectetur, adipiscing elit. 
-                Quaerat nulla repellats quo eaque alias corporis sunt, 
-                facilis nesciunt rem fugit!
+              Mang đến cho ngôi nhà của bạn một phong cách mới. 
+              Sống tốt hơn, thiết kế độc đáo, đáp ứng nhu cầu của bạn!
               </p>
             </div>
             
             <div className="col">
               <div className="footer__quick-links">
                 <div className="quick__links-title">
-                  <h4>Top Categories</h4>
+                  <h4>Top Danh mục</h4>
                 </div>
                 <ul>
                   <li>
-                    <Link to="#">Mobile Phone</Link>
+                    <Link to="#">Giường</Link>
                   </li>
                   <li>
                     <Link to="#">Sofa</Link>
                   </li>
                   <li>
-                    <Link to="#">Chair</Link>
+                    <Link to="#">Ghế</Link>
                   </li>
                   <li>
-                    <Link to="#">Phone</Link>
+                    <Link to="#">Tủ</Link>
                   </li>
                 </ul>
               </div>
@@ -102,7 +101,7 @@ const Footer = () => {
             <div className="col">
               <div className="footer__quick-links">
                 <div className="quick__links-title">
-                  <h4>Useful Links</h4>
+                  <h4>Liên kết hữu ích</h4>
                 </div>
                 <ul>
                   <li>

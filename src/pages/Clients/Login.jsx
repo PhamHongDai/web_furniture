@@ -95,12 +95,12 @@ const Login = () => {
   };
   
     return (
-      <Helmet title='Login'>
+      <Helmet title='Đăng nhập'>
         <section>
           <Container>
             <div className="row">
               <div className="login__form">
-                <h3>Login</h3>
+                <h3>Đăng nhập</h3>
                 <form onSubmit={handleLogin}>
                   <div className="form__group">
                   <input
@@ -121,8 +121,8 @@ const Login = () => {
                   />
                   </div>
 
-                  <button type="submit" className="buy__btn">Login</button>
-                  <p>Don't have an account? <Link to="/signup">Create an account</Link></p>
+                  <button type="submit" className="buy__btn">Đăng nhập</button>
+                  <p>Chưa có tài khoản? <Link to="/signup">Tạo tài khoản</Link></p>
                 </form>
               </div>
             </div>

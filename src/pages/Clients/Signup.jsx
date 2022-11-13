@@ -98,12 +98,12 @@ const Signup = () => {
   };
 
     return (
-      <Helmet title='Signup'>
+      <Helmet title='Đăng ký'>
         <section>
           <Container>
             <div className="row">
               <div className="login__form">
-                <h3>Signup</h3>
+                <h3>Đăng ký</h3>
                 <form onSubmit={handleSignUp}>
                   <div className="form__group">
                     <input type="text" placeholder="Username" 
@@ -118,12 +118,12 @@ const Signup = () => {
                     value={password} onChange={e=> setPassword(e.target.value)}/>
                   </div>
                   <div className="form__group">
-                    <input type="password" placeholder="confirmPassword"
+                    <input type="password" placeholder="Confirm Password"
                     value={confirmPassword} onChange={e=> setConfirmPassword(e.target.value)}/>
                   </div>
 
-                  <button type="submit" className="buy__btn">Create an account</button>
-                  <p>Already have an account? <Link to="/signin">Login</Link></p>
+                  <button type="submit" className="buy__btn">Tạo tài khoản</button>
+                  <p>Đã có tài khoản? <Link to="/signin">Đăng nhập</Link></p>
                 </form>
               </div>
             </div>
