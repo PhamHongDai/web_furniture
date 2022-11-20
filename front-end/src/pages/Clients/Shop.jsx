@@ -7,10 +7,10 @@ import ProductList from "../../components/UI/ProductList";
 
 const Container = styled.section`
 
-  .container{
+  .content{
     padding: 0px 140px;
   }
-  .row{
+  .x{
     display: grid;
     grid-template-columns: 30% 30% 40%;
   }
@@ -44,6 +44,7 @@ const Container = styled.section`
     border: none;
     outline: none;
     padding: 8px 10px;
+    font-size: .85rem;
   }
   .search__box span i{
     color: #331929;
@@ -90,9 +91,9 @@ const Shop = () => {
         <CommonSection title='Sản phẩm'/>
 
         <Container>
-          <div className="container">
-            <div className="row">
-              <div className="col">
+          <div className="content">
+            <div className="x">
+              <div className="y">
                 <div className="filter__widget">
                   <select onChange={handleFilter}>
                     <option value="default">Lọc theo danh mục</option>
@@ -107,7 +108,7 @@ const Shop = () => {
                 </div>
               </div>
 
-              <div className="col">
+              <div className="y">
                 <div className="filter__widget">
                     <select>
                       <option>Sắp xếp theo</option>
@@ -117,7 +118,7 @@ const Shop = () => {
                   </div>
               </div>
 
-              <div className="col">
+              <div className="y">
                 <div className="search__box">
                   <input type="text" placeholder="Tìm kiếm ..." onChange={handleSearch}/>
                   <span>
@@ -130,10 +131,11 @@ const Shop = () => {
         </Container>
 
         <section>
-          {
+          {/* {
             productData.length === 0 ? <h1 style={{textAlign: "center", fontSize: "1.5rem"}}>Không tìm thấy sản phẩm!</h1>
-            : <ProductList data ={productData}/> 
-          }
+            :  */}
+            <ProductList data ={productData}/> 
+          {/* } */}
         </section>
       </Helmet>
     );

@@ -9,7 +9,7 @@ import { addToCart } from "../../slices/cartSlice";
 
 const Container = styled.section`
   padding: 50px 140px;
-  .container{
+  .content{
     margin-top: 20px;
   }
   .wrap{
@@ -17,7 +17,7 @@ const Container = styled.section`
     background: #fef8f3;
     border-radius: 3px;
   }
-  .title-row {
+  .title-x {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,24 +25,24 @@ const Container = styled.section`
     padding: 20px 20px;
     border-bottom: 1px solid #999;
   }
-  .row {
+  .x {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 10px;
   }
-  .row img{
+  .x img{
     height: 90px;
     width: 90px;
     border-radius: 3px;
   }
-  .col{
+  .y{
     display: flex;
     flex-direction: column;
     padding: 0px 10px;
     gap: 17px;
   }
-  .col ,.title-col {
+  .y ,.title-y {
     label{
       color: #707070;
     }
@@ -64,9 +64,9 @@ const Container = styled.section`
   .buy__btn:hover{
     background: #1c689e;
   }
-  .total-row {
+  .total-x {
     padding: 20px 0px;
-    .row .col span{
+    .x .y span{
       font-size: 1.4rem;
       color: #EE4D2D;
     }
@@ -132,7 +132,7 @@ const Purchase = () => {
       <CommonSection title="Đơn mua" />
       <Container>
         <ButtonPurchase handleBtn={handleBtn} valueCss={check} />
-        <div className="container">
+        <div className="content">
           {
             loading ? (
               <div className="notifi_block">
@@ -152,16 +152,16 @@ const Purchase = () => {
                     let format = d.getDate() + "-" + month + "-" + d.getFullYear() + " " + d.getHours() + ":" + minutes;
                     return (
                       <div className="wrap" key={item._id}>
-                        <div className="title-row">
-                          <div className="title-col">
+                        <div className="title-x">
+                          <div className="title-y">
                             <label>ID Đơn hàng: </label>
                             <span>{item._id}</span>
                           </div>
-                          <div className="title-col">
+                          <div className="title-y">
                             <label>Trạng thái thanh toán: </label>
                             <span>{item.paymentStatus}</span>
                           </div>
-                          <div className="title-col">
+                          <div className="title-y">
                             <label>Ngày Đặt Hàng: </label>
                             <span>{format}</span>
                           </div>
@@ -177,10 +177,10 @@ const Purchase = () => {
                             });
 
                             return (
-                              <div className="row" key={purItem._id} style={{ borderBottom: "1px solid #88888866" }}>
-                                <div className="row">
+                              <div className="x" key={purItem._id} style={{ borderBottom: "1px solid #88888866" }}>
+                                <div className="x">
                                   <img src={purItem.product.productPictures[0]} alt="ảnh sản phẩm"/>
-                                  <div className="col">
+                                  <div className="y">
                                     <div>
                                       <span>{purItem.product.name}</span>
                                     </div>
@@ -194,7 +194,7 @@ const Purchase = () => {
                                   </div>
                                 </div>
 
-                                <div className="col">
+                                <div className="y">
                                   <span>{Number(purItem.price).toLocaleString("vi")}₫</span>
                                 </div>
                               </div>
@@ -202,11 +202,11 @@ const Purchase = () => {
                           })
                         }
 
-                        <div className="total-row">
-                          <div className="row">
-                            <div className="col"></div>
+                        <div className="total-x">
+                          <div className="x">
+                            <div className="y"></div>
 
-                            <div className="col">
+                            <div className="y">
                               <div>
                                 <label>Tổng số tiền: </label>
                                 <span>{Number(item.totalAmount).toLocaleString("vi")}₫</span>

@@ -9,23 +9,23 @@ import { addOrder } from "../../slices/orderSlice";
 
 const Container = styled.section`
   padding: 50px 120px;
-  .row h3{
+  .x h3{
     font-size: 1.4rem;
     font-weight: 600;
     color: #0D324D;
   }
-  .row{
+  .x{
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .item-row{
+  .item-x{
     display: flex;
     align-items: center;
     padding: 10px 10px;
   }
-  .item-row label{
+  .item-x label{
     margin-right: 5px;
   }
   .wrap{
@@ -36,27 +36,26 @@ const Container = styled.section`
     width: 400px;
     padding: 10px 10px;
   }
-  .item-row span{
+  .item-x span{
     color: #111;
     font-size: 1.1rem;
   }
-  .item-row select,
-  .item-row select option{
+  .item-x select,
+  .item-x select option{
     color: #111;
     font-size: 1rem;
     max-width: 700px;
-    padding: 5px 5px;
     outline: none;
     border: none;
     border-bottom: 1px solid #999;
   }
   
-  .wrap .item-row{
+  .wrap .item-x{
     display: flex;
     justify-content: space-between;
   }
-  .wrap .item-row label,
-  .wrap .item-row span{
+  .wrap .item-x label,
+  .wrap .item-x span{
     color: #fff;
   }
   .buy__btn{
@@ -176,12 +175,12 @@ const Checkout = () => {
       <Helmet title="Thanh toán">
         <CommonSection title="Thanh toán"/>
           <Container>
-            <div className="row" style={{borderBottom: "1px solid #999"}}>
-              <div className="item-row">
+            <div className="x" style={{borderBottom: "1px solid #999"}}>
+              <div className="item-x">
                 <h3>Thông tin đơn hàng</h3>
               </div>
             </div>
-            <div className="row">
+            <div className="x">
               {
                 loading ? (
                   <div className="notifi__block">Loading...</div>
@@ -193,16 +192,16 @@ const Checkout = () => {
                     </Link>
                   </div>
                 ) : (
-                  <div className="col">
-                    <div className="item-row">
+                  <div className="y">
+                    <div className="item-x">
                       <label>Họ và Tên:</label>
                       <span>{address.name}</span>
                     </div>
-                    <div className="item-row">
+                    <div className="item-x">
                       <label>Số điện thoại:</label>
                       <span>{address.phoneNumber}</span>
                     </div>
-                    <div className="item-row">
+                    <div className="item-x">
                       <label>Địa chỉ:</label>
                       <span>
                         <select  
@@ -219,29 +218,29 @@ const Checkout = () => {
                   </div>
                 )
               }
-              <div className="col">
+              <div className="y">
                 <div className="wrap">
-                  <div className="item-row">
+                  <div className="item-x">
                     <label>Tổng số loại mặt hàng:</label>
                     <span>{orderItems.length}</span>
                   </div>
-                  <div className="item-row">
+                  <div className="item-x">
                     <label>Tổng số lượng mặt hàng:</label>
                     <span>{totalQuantity}</span>
                   </div>
-                  <div className="item-row">
+                  <div className="item-x">
                     <label>Tổng tiền hàng:</label>
                     <span>{Number(totalPrice).toLocaleString("vi")}₫</span>
                   </div>
-                  <div className="item-row">
+                  <div className="item-x">
                     <label>Phí vận chuyển:</label>
                     <span>{Number(shippingFee).toLocaleString("vi")}₫</span>
                   </div>
-                  <div className="item-row" style={{borderTop: "1px solid #fff"}}>
+                  <div className="item-x" style={{borderTop: "1px solid #fff"}}>
                     <label style={{fontSize: "1.4rem"}}>Tổng tiền thanh toán:</label>
                     <span style={{fontSize: "1.4rem"}}>{Number(totalAmount).toLocaleString("vi")}₫</span>
                   </div>
-                  <div className="item-row">
+                  <div className="item-x">
                     <button className="buy__btn" onClick={() => handlePayment()}>Đặt hàng</button>
                   </div>
                 </div>

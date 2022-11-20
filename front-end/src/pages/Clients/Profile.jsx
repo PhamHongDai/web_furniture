@@ -8,7 +8,7 @@ import Helmet from "../../components/layout/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
 
 const Container = styled.section`
-  .container{
+  .content{
     display: flex;
     flex-direction: column;
     /* background: #f2f1f186; */
@@ -16,7 +16,7 @@ const Container = styled.section`
     height: 400px;
     border-radius: 5px;
   }
-  .row{
+  .x{
     display: grid;
     grid-template-columns: 30% 70%;
   }
@@ -191,9 +191,9 @@ const Profile = () => {
     <Helmet title="Hồ sơ người dùng">
       <CommonSection title="Hồ sơ người dùng" />
       <Container>
-        <div className="container">
-          <div className="row">
-            <div className="col">
+        <div className="content">
+          <div className="x">
+            <div className="y">
               <div className="wrap__img-info">
                 <img src={userInfo.profilePicture || user.profilePicture} />
                 <div className="wrapChooseImg">
@@ -207,7 +207,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <div className="col">
+            <div className="y">
               <div className="group__input">
                 <span>Tên</span>
                 <input className={nameValid ? "" : "warning"}

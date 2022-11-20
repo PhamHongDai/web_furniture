@@ -7,7 +7,7 @@ import Helmet from "../../components/layout/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
 
 const Container = styled.section`
-  .container{
+  .content{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,8 +96,8 @@ const Password = () => {
     <Helmet title="Đổi mật khẩu">
       <CommonSection title="Đổi mật khẩu" />
       <Container>
-        <div className="container">
-          <div className="col">
+        <div className="content">
+          <div className="y">
             <div className="group__input">
               <span>Xác nhận mã OTP</span>
               <input onChange={(e) => setOtp(e.target.value)} type="text" />

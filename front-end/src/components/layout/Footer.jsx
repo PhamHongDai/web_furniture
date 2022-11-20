@@ -4,15 +4,15 @@ import styled from "styled-components";
 
 const Container = styled.footer`
   width: 100%;
-  .container{
+  .content{
     padding: 50px 120px;
     background: #331929;
   }
-  .row{
+  .x{
     display: grid;
     grid-template-columns: 30% 23% 23% 24%;
   }
-  .col{
+  .y{
     padding: 0px 20px;
     line-height: 35px;
   }
@@ -62,9 +62,9 @@ const Container = styled.footer`
 const Footer = () => {
     return (
       <Container>
-        <div className="container">
-          <div className="row">
-            <div className="col">
+        <div className="content">
+          <div className="x">
+            <div className="y">
               <div className="logo">
                 <div>
                   <h1>Furniture</h1>
@@ -76,7 +76,7 @@ const Footer = () => {
               </p>
             </div>
             
-            <div className="col">
+            <div className="y">
               <div className="footer__quick-links">
                 <div className="quick__links-title">
                   <h4>Top Danh mục</h4>
@@ -98,7 +98,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="col">
+            <div className="y">
               <div className="footer__quick-links">
                 <div className="quick__links-title">
                   <h4>Liên kết hữu ích</h4>
@@ -120,7 +120,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="col">
+            <div className="y">
               <div className="footer__quick-links">
                 <div className="quick__links-title">
                   <h4>Contact</h4>

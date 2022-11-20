@@ -10,7 +10,7 @@ import { addToCart, removeCartItem } from "../../slices/cartSlice";
 
 const Container = styled.div`
   padding: 0px 80px;
-  .row{
+  .x{
     display: grid;
     grid-template-columns: 79% 21%;
     gap: 20px;
@@ -35,8 +35,7 @@ const Container = styled.div`
     border-bottom: 0.7px solid #9999998b;
   }
   th, td {
-    word-break: break-all;
-    padding: 10px 20px;
+    padding: 5px 10px;
     text-align: center;
     vertical-align: middle;
     color: #0D324D;
@@ -220,8 +219,8 @@ const Cart = () => {
                     <div className="notifi_block">Loading...</div>) : cartItems.length === 0 ? (
                       <div className="notifi_block">Giỏ hàng của bạn đang trống! <Link to="/shop" style={{color: "coral", textDecoration: "underline"}}>Đến mua ngay</Link></div>) : (
                     <>
-                      <div className="row">
-                        <div className="col">
+                      <div className="x">
+                        <div className="y">
                           <table className="table">
                             <thead>
                               <tr>
@@ -306,7 +305,7 @@ const Cart = () => {
                           </table>
                         </div>
 
-                        <div className="col">
+                        <div className="y">
                           <div className="wrap__links">
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                               <h6 style={{ fontSize: "1.4rem", fontWeight: "500", color: "#0D324D" }} >Tổng tiền</h6>

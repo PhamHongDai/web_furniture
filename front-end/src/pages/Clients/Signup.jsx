@@ -84,7 +84,8 @@ const Signup = () => {
       toast.error("Mật khẩu không trùng khớp!");
     } else {
       try {
-        const res = await dispatch(signup({ email, password, name })).unwrap();
+        const res = await dispatch(signup({ email, password, name }));
+        console.log(res)
         if (res.status === 201) {
           toast.success("Đăng ký thành công!");
           setTimeout(function () {
@@ -101,7 +102,7 @@ const Signup = () => {
       <Helmet title='Đăng ký'>
         <section>
           <Container>
-            <div className="row">
+            <div className="x">
               <div className="login__form">
                 <h3>Đăng ký</h3>
                 <form onSubmit={handleSignUp}>

@@ -98,7 +98,7 @@ const Login = () => {
       <Helmet title='Đăng nhập'>
         <section>
           <Container>
-            <div className="row">
+            <div className="x">
               <div className="login__form">
                 <h3>Đăng nhập</h3>
                 <form onSubmit={handleLogin}>

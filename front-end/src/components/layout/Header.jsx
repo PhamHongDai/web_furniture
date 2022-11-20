@@ -99,7 +99,7 @@ const Icon = styled.div`
     position: absolute;
     top: -20%;
     right: -20%;
-    height: 15px;
+    height: 17px;
     width: 20px;
     min-width: 1.2rem;
     line-height: 1.2em;
@@ -107,7 +107,9 @@ const Icon = styled.div`
     background: #0D324D;
     color: #fff;
     border-radius: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: .8rem;
     .avatar{
       position: relative;

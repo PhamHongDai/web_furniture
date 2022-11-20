@@ -31,8 +31,8 @@ const userSchema = new mongoose.Schema(
 
     profilePicture: {
       type: String,
-      default:
-        "https://cachtrongrausach.vn/this-page-isn-t-working/imager_2_16115_700.jpg",
+      // default:
+      //   "https://www.safepassageproject.org/wp-content/uploads/2022/08/avatar_icon-260x260.png",
     },
 
     isDisabled: false,

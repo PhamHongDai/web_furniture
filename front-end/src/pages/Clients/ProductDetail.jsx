@@ -10,16 +10,16 @@ import { useEffect } from "react";
 import { addToCart } from "../../slices/cartSlice";
 import { toast } from "react-toastify";
 const Wrapper = styled.section`
-  .container{
+  .content{
     padding: 0px 140px;
   }
-  .row {
+  .x {
     display: flex;
   }
-  .col{
+  .y{
     padding: 50px 50px;
   }
-  .col img {
+  .y img {
     width: 350px;
     height: auto;
     border-radius: 5px;
@@ -126,7 +126,7 @@ const Wrapper = styled.section`
     width: 100%;
     border: 1px solid #0D324D;
     border-radius: 5px;
-    padding: 8px 20px;
+    padding: 16px 20px;
     resize: none;
   }
   .form__group input:focus, 
@@ -251,13 +251,13 @@ const ProductDetail = () => {
     <Helmet title={product.name}>
       <CommonSection title={product.name} />
       <Wrapper>
-        <div className="container">
-          <div className="row">
-            <div className="col">
+        <div className="content">
+          <div className="x">
+            <div className="y">
               <img src={product.productPictures[0]} alt='' />
             </div>
 
-            <div className="col">
+            <div className="y">
               <div className="product__details">
                 <h2>{product.name}</h2>
                 <div className="product__rating">
@@ -303,8 +303,8 @@ const ProductDetail = () => {
       </Wrapper>
 
       <Wrapper>
-        <div className="container">
-          <div className="row" style={{ alignItems: "center", justifyContent: "center" }}>
+        <div className="content">
+          <div className="x" style={{ alignItems: "center", justifyContent: "center" }}>
             <div className="tab__wrapper">
               <h6 className={`${tab === 'desc' ? 'active__tab' : ''}`}
                 onClick={() => setTab('desc')}>Mô tả</h6>
@@ -312,7 +312,7 @@ const ProductDetail = () => {
                 onClick={() => setTab('rev')}>Đánh giá({product.reviews.length})</h6>
             </div>
           </div>
-          <div className="row" style={{ marginTop: '2rem', border: '1px solid #0D324D', borderRadius: '5px', padding: '10px 10px' }}>
+          <div className="x" style={{ marginTop: '2rem', border: '1px solid #0D324D', borderRadius: '5px', padding: '10px 10px' }}>
             <div>
               {
                 tab === 'desc' ?
@@ -344,7 +344,7 @@ const ProductDetail = () => {
 
           {
             tab === 'rev' ?
-              <div className="row" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div className="x" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div className="review__form">
                   <h4>Để lại phản hồi của bạn</h4>
                   <form>
@@ -359,7 +359,7 @@ const ProductDetail = () => {
                       <span>5<i className="ri-star-s-fill"></i></span>
                     </div>
                     <div className="form__group">
-                      <textarea rows="4" type="text" placeholder="Phản hồi ..." />
+                      <textarea rows="5" type="text" placeholder="Phản hồi ..." />
                     </div>
 
                     <button type="submit" className="buy__btn">Gửi</button>

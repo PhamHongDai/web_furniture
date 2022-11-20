@@ -14,13 +14,13 @@ import { toast } from "react-toastify";
 
 const Container = styled.section`
   margin: 0px 200px;
-  .row{
+  .x{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0px;
   }
-  .col h4{
+  .y h4{
     font-weight: 600;
     font-size: 1.4rem;
     color: #0D324D;
@@ -41,12 +41,12 @@ const Container = styled.section`
   .buy__btn:hover{
     background: #1c689e;
   }
-  .item-row{
+  .item-x{
     padding: 10px 0px;
     display: flex;
     align-items: center;
   }
-  .item-row label{
+  .item-x label{
     color: #555555CC;
     display: inline-block;
     width: 150px;
@@ -57,7 +57,6 @@ const Container = styled.section`
   }
   .defaul__value{
     border: 2px solid #0D324D;
-    width: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,7 +74,7 @@ const Container = styled.section`
   }
   .choose__btn{
     height: 40px;
-    width: 150px;
+    width: 100%;
     background: #fff;
     cursor: pointer;
     border: 1px solid #999;
@@ -193,12 +192,12 @@ const Delivery = () => {
       <CommonSection title="Địa chỉ vận chuyển"/>
       <Container>
         <div className="container">
-          <div className="row" style={{borderBottom: "1px solid #999"}}>
-            <div className="col">
+          <div className="x" style={{borderBottom: "1px solid #999"}}>
+            <div className="y">
               <h4>Địa Chỉ Của Tôi</h4>
             </div>
 
-            <div className="col">
+            <div className="y">
               <button className="buy__btn" onClick={handleAddBtn}>
                 <span>Thêm Địa Chỉ Mới</span>
               </button>
@@ -216,9 +215,9 @@ const Delivery = () => {
                 <>
                 {
                   deliveryInfo.address?.map((item) => (
-                    <div className="row" key={item._id} style={{borderBottom: "1px dotted rgba(0,0,0,0.2)"}}>
-                      <div className="col">
-                        <div className="item-row">
+                    <div className="x" key={item._id} style={{borderBottom: "1px dotted rgba(0,0,0,0.2)"}}>
+                      <div className="y">
+                        <div className="item-x">
                           <label>Họ và tên</label>
                           <span>{item.name}</span>
                           {item.isDefault ? (
@@ -227,18 +226,18 @@ const Delivery = () => {
                             <></>
                           )}
                         </div>
-                        <div className="item-row">
+                        <div className="item-x">
                           <label>Số điện thoại</label>
                           <span>{item.phoneNumber}</span>
                         </div>
-                        <div className="item-row">
+                        <div className="item-x">
                           <label>Địa chỉ</label>
                           <span>{item.address}</span>
                         </div>
                     </div>
 
-                    <div className="col">
-                      <div className="item-row" style={{ justifyContent: "center" }}>
+                    <div className="y">
+                      <div className="item-x" style={{ justifyContent: "center" }}>
                         <span className="text__action" onClick={() => handleEditBtn(item)}>
                           Cập nhật
                         </span>
@@ -246,7 +245,7 @@ const Delivery = () => {
                           Xóa
                         </span>
                       </div>
-                      <div className="item-row">
+                      <div className="item-x">
                         <button className="choose__btn" onClick={() => handleSetDefaultBtn(item._id)}>
                           Thiết Lập Mặc Định
                         </button>
