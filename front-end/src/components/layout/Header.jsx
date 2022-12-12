@@ -10,15 +10,15 @@ import { isUserLoggedIn, signout } from "../../slices/authSlice";
 const nav__link = [
   {
     path: '/',
-    display: 'Home',
+    display: 'Trang chủ',
   },
   {
     path: '/shop',
-    display: 'Shop',
+    display: 'Mua sắm',
   },
   {
     path: '/cart',
-    display: 'Cart',
+    display: 'Giỏ hàng',
   },
 ]
 
@@ -26,7 +26,7 @@ const Head = styled.header`
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 300;
+  z-index: 1200;
   box-shadow: 3px 3px 8px -3px #ddd;
 `
 
@@ -37,12 +37,20 @@ const Container = styled.section`
   background: linear-gradient(#F1DFD1, #F6F0EA);
   height: 70px;
   padding: 0px 120px;
+  a{
+    text-decoration: none;
+    color: #333;
+  }
+  ul{
+    margin-bottom: 0;
+    padding-left: 0;
+  }
   .links__group a{
     padding: 10px 10px;
     font-weight: 500;
   }
   .links__group a:hover{
-    color: red;
+    color: red !important;
   }
 `
 const Logo = styled.div`
@@ -56,6 +64,7 @@ const Logo = styled.div`
   h1 {
     font-size: 1.5rem;
     font-weight: 700;
+    margin-bottom: 0;
     color: #B82E1F;
   }
 `
@@ -73,7 +82,7 @@ const Navigation = styled.div`
     color: red;
   }
   .nav__active {
-    font-weight: 600 !important;
+    color: red;
   }
   
 `
@@ -97,8 +106,8 @@ const Icon = styled.div`
   }
   .badge {
     position: absolute;
-    top: -20%;
-    right: -20%;
+    top: -2%;
+    right: -25%;
     height: 17px;
     width: 20px;
     min-width: 1.2rem;
@@ -191,7 +200,7 @@ const Header = () => {
 
         <Navigation>
           <ul className="menu">
-            {
+            {user.role === 'admin' ? "" : (
               nav__link.map((item, index) => (
                 <li className="nav__link" key={index}>
                   <NavLink
@@ -203,25 +212,30 @@ const Header = () => {
                   </NavLink>
                 </li>
               ))
+            )
             }
           </ul>
         </Navigation>
 
         <Icon>
-          <motion.span whileTap={{ scale: 1.2 }} className='cart__icon'>
-            <Link to="/cart">
-              <i className="ri-shopping-cart-2-line" />
-              {
-                !isAuthenticated ? (
-                  ""
-                ) : cartItems.length === 0 ? (
-                  ""
-                ) : (
-                  <span className="badge">{cartItems.length}</span>
-                )
-              }
-            </Link>
-          </motion.span>
+          {
+            user.role === 'admin' ? "" : (
+              <motion.span whileTap={{ scale: 1.2 }} className='cart__icon'>
+                <Link to="/cart">
+                  <i className="ri-shopping-cart-2-line" />
+                  {
+                    !isAuthenticated ? (
+                      ""
+                    ) : cartItems.length === 0 ? (
+                      ""
+                    ) : (
+                      <span className="badge">{cartItems.length}</span>
+                    )
+                  }
+                </Link>
+              </motion.span>
+            )
+          }
           {
             isAuthenticated ? (
               <GroupAvatar className="group__avatar">
@@ -235,23 +249,33 @@ const Header = () => {
                   }
                 </span>
                 <Menu className="menu">
-                  <Link className="link" to="/profile">
-                    Tài Khoản Của Tôi
-                  </Link>
-                  <Link className="link" to="/password">
-                    Mật khẩu
-                  </Link>
-                  <Link className="link" to="/delivery">
-                    Địa chỉ giao hàng
-                  </Link>
-                  <Link className="link" to="/purchase">
-                    Đơn Mua
-                  </Link>
-                  <span className="link"
-                    onClick={() => dispatch(signout(), navigate("/"))}
+                  {
+                    user.role === 'admin' ? (
+                      <Link className="link" to="/password">
+                        Mật khẩu
+                      </Link>
+                    ) : (
+                      <>
+                        <Link className="link" to="/profile">
+                          Tài Khoản Của Tôi
+                        </Link>
+                        <Link className="link" to="/password">
+                          Mật khẩu
+                        </Link>
+                        <Link className="link" to="/delivery">
+                          Địa chỉ giao hàng
+                        </Link>
+                        <Link className="link" to="/purchase">
+                          Đơn Mua
+                        </Link>
+                      </>
+                    )
+                  }
+                  <a className="link" href="/"
+                    onClick={() => dispatch(signout())}
                   >
                     Đăng Xuất
-                  </span>
+                  </a>
                 </Menu>
               </GroupAvatar>
             ) : (

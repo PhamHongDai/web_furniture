@@ -149,7 +149,7 @@ const Purchase = () => {
                       month = "0" + month;
                     if (minutes < 10)
                       minutes = "0" + minutes;
-                    let format = d.getDate() + "-" + month + "-" + d.getFullYear() + " " + d.getHours() + ":" + minutes;
+                    let format = month + "-" + d.getDate() + "-" + d.getFullYear() + " " + d.getHours() + ":" + minutes;
                     return (
                       <div className="wrap" key={item._id}>
                         <div className="title-x">
@@ -158,7 +158,8 @@ const Purchase = () => {
                             <span>{item._id}</span>
                           </div>
                           <div className="title-y">
-                            <label>Trạng thái thanh toán: </label>
+                            <label>Trạng thái thanh toán:</label>
+                            <> </>
                             <span>{item.paymentStatus}</span>
                           </div>
                           <div className="title-y">

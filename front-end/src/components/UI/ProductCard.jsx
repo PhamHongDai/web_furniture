@@ -9,6 +9,14 @@ const Container = styled.div`
   border-radius: 5px;
   background: #f6f0ea5c;
   cursor: pointer;
+  a{
+    text-decoration: none;
+    color: #333;
+  }
+  ul{
+    margin-bottom: 0;
+    padding-left: 0;
+  }
   :hover{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
   }

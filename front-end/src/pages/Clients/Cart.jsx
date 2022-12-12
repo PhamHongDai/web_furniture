@@ -10,6 +10,14 @@ import { addToCart, removeCartItem } from "../../slices/cartSlice";
 
 const Container = styled.div`
   padding: 0px 80px;
+  a{
+    text-decoration: none;
+    color: #333;
+  }
+  ul{
+    margin-bottom: 0;
+    padding-left: 0;
+  }
   .x{
     display: grid;
     grid-template-columns: 79% 21%;
@@ -31,9 +39,7 @@ const Container = styled.div`
     font-weight: 600;
     color: #0D324D;
   }
-  tr{
-    border-bottom: 0.7px solid #9999998b;
-  }
+  
   th, td {
     padding: 5px 10px;
     text-align: center;

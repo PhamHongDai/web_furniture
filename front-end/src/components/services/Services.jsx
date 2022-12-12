@@ -7,6 +7,9 @@ const Container = styled.section`
   grid-template-columns: auto auto auto auto;
   margin: 0px 100px;
   gap: 40px;
+  p{
+    margin-bottom: 0;
+  }
   .service__item{
     padding: 30px;
     display: flex;

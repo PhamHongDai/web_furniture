@@ -3,17 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "./slices/productSlice";
 import { getCartItems } from "./slices/cartSlice";
-import { getOrdersByUser } from "./slices/orderSlice";
+import { getAllOrders, getOrdersByUser } from "./slices/orderSlice";
 import { getUserAddress } from "./slices/addressSlice";
 import { isUserLoggedIn } from "./slices/authSlice";
 import { getCategories } from "./slices/categorySlice";
+import { getUsers } from "./slices/userSlice";
 
 function App() {
-  const { isAuthenticated } = useSelector((state) =>  state.auth);
+  const { isAuthenticated, user } = useSelector((state) =>  state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts()).unwrap();
     dispatch(getCategories()).unwrap();
+    if (user.role === 'admin') {
+      const checkAdmin = () => {
+        dispatch(getAllOrders());
+        dispatch(getUsers());
+      }
+      checkAdmin();
+    }
     if (isAuthenticated) {
       const fetchData = () => {
         dispatch(getCartItems());
@@ -21,7 +29,8 @@ function App() {
         dispatch(getOrdersByUser());
       };
       fetchData();
-    } else {
+    }
+    else {
       const checkUser = () => {
         dispatch(isUserLoggedIn());
       };

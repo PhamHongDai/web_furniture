@@ -71,7 +71,7 @@ const Home = () => {
     if(products)
     {
       const filteredTrendingProducts = products.filter(
-        (item) => item.category.name === "Thiết Bị Điện Tử"
+        (item) => item.category.name === "Ghế"
       ).slice(0, 8);
       setListProduct(filteredTrendingProducts);
     };
@@ -90,7 +90,7 @@ const Home = () => {
                 </p>
                 <Link to="/shop">
                   <motion.button whileHover={{ scale:1.1 }} className="buy__btn">
-                    SHOP NOW
+                    MUA NGAY
                   </motion.button>
                 </Link>
               </div>

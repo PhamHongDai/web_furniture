@@ -10,9 +10,16 @@ import Profile from "../pages/Clients/Profile";
 import Delivery from "../pages/Clients/Delivery";
 import Purchase from "../pages/Clients/Purchase";
 import Password from "../pages/Clients/Password";
+import Products from "../pages/Admin/Products";
 import ProtectedRoute, { ProtectedCheckout, ProtectedUrl } from "./ProtectedRoute";
+import HomeAdmin from "../pages/Admin/HomeAdmin";
+import { useSelector } from "react-redux";
+import Catagories from "../pages/Admin/Catagories";
+import Orders from "../pages/Admin/Orders";
+import Users from "../pages/Admin/Users";
 
 const Routers = () => {
+  const { user } = useSelector((state) => state.auth);
     return (
       <Routes>
         <Route element ={<ProtectedRoute/>}>
@@ -24,7 +31,11 @@ const Routers = () => {
             <Route path='/checkout' element={<Checkout/>}/>
           </Route>
         </Route>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/' element={user.role === "admin" ? <HomeAdmin/> : <Home/>}/>
+        <Route path='/products' element={<Products/>}/>
+        <Route path='/catagories' element={<Catagories/>}/>
+        <Route path='/users' element={<Users/>}/>
+        <Route path='/orders' element={<Orders/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/shop' element={<Shop/>}/>
         <Route path='/shop/:slug' element={<ProductDetail/>}/>

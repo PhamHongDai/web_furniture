@@ -131,11 +131,11 @@ const Shop = () => {
         </Container>
 
         <section>
-          {/* {
+          {
             productData.length === 0 ? <h1 style={{textAlign: "center", fontSize: "1.5rem"}}>Không tìm thấy sản phẩm!</h1>
-            :  */}
+            : 
             <ProductList data ={productData}/> 
-          {/* } */}
+          }
         </section>
       </Helmet>
     );

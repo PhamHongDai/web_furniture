@@ -4,6 +4,17 @@ import styled from "styled-components";
 
 const Container = styled.footer`
   width: 100%;
+  a{
+    text-decoration: none;
+    color: #333;
+  }
+  ul{
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+  p{
+    margin-bottom: 0;
+  }
   .content{
     padding: 50px 120px;
     background: #331929;
@@ -123,7 +134,7 @@ const Footer = () => {
             <div className="y">
               <div className="footer__quick-links">
                 <div className="quick__links-title">
-                  <h4>Contact</h4>
+                  <h4>Liên hệ</h4>
                 </div>
                 <ul>
                   <li>

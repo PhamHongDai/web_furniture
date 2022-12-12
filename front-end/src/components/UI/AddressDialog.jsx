@@ -30,9 +30,9 @@ const DialogWrapper = styled.div`
   justify-content: center;
 `
 const Title = styled.h5`
-  font-weight: 100;
+  font-weight: 600;
   font-size: 1.2rem;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 `
 
 const Item = styled.div`

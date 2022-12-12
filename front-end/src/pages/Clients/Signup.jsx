@@ -86,7 +86,7 @@ const Signup = () => {
       try {
         const res = await dispatch(signup({ email, password, name }));
         console.log(res)
-        if (res.status === 201) {
+        if (res.payload.request.status === 201) {
           toast.success("Đăng ký thành công!");
           setTimeout(function () {
             navigate("/signin");
@@ -107,19 +107,19 @@ const Signup = () => {
                 <h3>Đăng ký</h3>
                 <form onSubmit={handleSignUp}>
                   <div className="form__group">
-                    <input type="text" placeholder="Username" 
+                    <input type="text" placeholder="Tên người dùng" 
                     value={name} onChange={e=> setName(e.target.value)}/>
                   </div>
                   <div className="form__group">
-                    <input type="email" placeholder="Enter your email" 
+                    <input type="email" placeholder="Hãy nhập email..." 
                     value={email} onChange={e=> setEmail(e.target.value)}/>
                   </div>
                     <div className="form__group">
-                    <input type="password" placeholder="Enter your password"
+                    <input type="password" placeholder="Hãy nhập mật khẩu..."
                     value={password} onChange={e=> setPassword(e.target.value)}/>
                   </div>
                   <div className="form__group">
-                    <input type="password" placeholder="Confirm Password"
+                    <input type="password" placeholder="Xác nhận mật khẩu"
                     value={confirmPassword} onChange={e=> setConfirmPassword(e.target.value)}/>
                   </div>
 
