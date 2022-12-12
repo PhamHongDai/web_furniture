@@ -8,9 +8,15 @@ const orderSchema = new mongoose.Schema(
       require: true,
     },
     address: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "DeliveryInfo",
-      require: true,
+      address:{
+        type:String
+      },
+      name:{
+        type:String
+      },
+      phone:{
+        type:String
+      },
     },
     totalAmount: {
       type: Number,

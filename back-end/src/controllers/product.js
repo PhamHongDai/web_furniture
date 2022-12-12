@@ -4,9 +4,7 @@ const slugify = require("slugify");
 
 exports.addProduct = (req, res) => {
   const { name, price, description, category, discountPercent } = req.body;
-  const variants = [{"quantity":10,"name":"gỗ sồi"},{"quantity":22,"name":"gỗ thông"},{"quantity":100,"name":"gỗ xoan"}];
   let productPictures = [];
-
   if (req.files.length > 0) {
     productPictures = req.files.map((file) => {
       return file.path;
@@ -25,7 +23,7 @@ exports.addProduct = (req, res) => {
   product.save((error, product) => {
     if (error) return res.status(400).json({ error });
     if (product) {
-      res.status(201).json({ product, files: req.files });
+      getProduct(res,201);
     } else {
       res.status(400).json({ error: "something went wrong" });
     }
@@ -233,7 +231,8 @@ exports.deleteProductById = (req, res) => {
   }
 };
 
-exports.getProducts = async (req, res) => {
+
+async function getProduct  (res,status = 200)  {
   try {
     const products = await Product.find({ isDisabled: { $ne: true } })
       .populate({ path: "category", select: "_id name categoryImage" })
@@ -255,6 +254,10 @@ exports.getProducts = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error });
   }
+}
+
+exports.getProducts = async (req, res) => {
+    getProduct(res)
 };
 
 exports.searchByProductName = async (req, res) => {
