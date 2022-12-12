@@ -86,7 +86,7 @@ const Signup = () => {
       try {
         const res = await dispatch(signup({ email, password, name }));
         console.log(res)
-        if (res.status === 201) {
+        if (res.payload.request.status === 201) {
           toast.success("Đăng ký thành công!");
           setTimeout(function () {
             navigate("/signin");

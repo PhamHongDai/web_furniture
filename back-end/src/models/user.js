@@ -20,8 +20,8 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
       trim: true,
-      unique: true,
       lowercase: true,
+      default: null
     },
     role: {
       type: String,
@@ -31,8 +31,7 @@ const userSchema = new mongoose.Schema(
 
     profilePicture: {
       type: String,
-      // default:
-      //   "https://www.safepassageproject.org/wp-content/uploads/2022/08/avatar_icon-260x260.png",
+      default:"https://www.safepassageproject.org/wp-content/uploads/2022/08/avatar_icon-260x260.png",
     },
 
     isDisabled: false,
