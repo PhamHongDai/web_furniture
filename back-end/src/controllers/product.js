@@ -167,19 +167,40 @@ exports.getProductById = (req, res) => {
   }
 };
 
-exports.updateProduct = (req, res) => {
-  let payload = { ...req.body };
-  delete payload._id;
+exports.updateProduct = async  (req, res) => {
 
-  Product.findOneAndUpdate({ _id: req.body._id }, payload, { new: true }).exec(
-    (error, product) => {
-      if (error) return res.status(400).json({ error });
-      if (product) {
-        return res.status(202).json({ product });
-      }
-      res.status(400).json({ error: "Product does not exist" });
+  const { _id,name, price, description, category, discountPercent, variant } = req.body;
+  console.log(req.body);
+  let variants =[];
+  for (let i = 0; i < variant.length; i+=2) {
+    variants.push({name: variant[i], quantity: parseInt(variant[i+1])});
+  }
+  let productPictures = [];
+  if (req.files.length > 0) {
+    productPictures = req.files.map((file) => {
+      return file.path;
+    });
+  }
+  const product = new Product({
+    name: name,
+    slug: `${slugify(name)}-${shortid.generate()}`,
+    price,
+    description,
+    productPictures,
+    variants,
+    discountPercent,
+    category,
+  });
+  const newCategory = await Category.findOneAndUpdate({ _id }, product, {
+    new: true,
+  }).exec((error, product) => {
+    if (error) return res.status(400).json({ error });
+    if (product) {
+      res.status(200).json({ product });
+    } else {
+      res.status(400).json({ error: "something went wrong" });
     }
-  );
+  });
 };
 
 exports.getProductDetailsBySlug = (req, res) => {
