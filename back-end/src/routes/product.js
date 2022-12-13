@@ -3,7 +3,6 @@ const {
   addProduct,
   addProducts,
   getProductsByCategorySlug,
-  getProductById,
   getProductDetailsBySlug,
   setDisableProduct,
   getProducts,
@@ -33,7 +32,6 @@ router.post("/addProducts", addProducts);
 router.get("/:slug/category", getProductsByCategorySlug);
 router.get("/:slug", getProductDetailsBySlug);
 router.post("/searchByProductName", searchByProductName);
-router.post("/getById", getProductById);
 router.post(
   "/setDisableProduct",
   requireSignin,
