@@ -43,20 +43,22 @@ exports.signin = async (req, res) => {
     console.log(req.body);
     const existingUser = await User.findOne({
       email: req.body.email,
-      isDisabled: { $ne: true },
     });
     if (existingUser) {
       const isPasswordMatch = await existingUser.authenticate(
         req.body.password
       );
       if (isPasswordMatch) {
-        const { _id, name, email, phoneNumber, profilePicture, role } =
+        const { _id, name, email, phoneNumber, profilePicture, role,isDisabled } =
           existingUser;
         const token = await generateJwtToken(_id, email, role);
-        // response token and user info
+        console.log(isDisabled)
+        if(isDisabled) {
+          console.log(isDisabled)
+          return res.status(400).json({ message: "Tài khoản bị khoá" })};
         res.status(200).json({
           token,
-          user: { _id, name, email, profilePicture, phoneNumber, role },
+          user: { _id, name, email, profilePicture, phoneNumber, role, isDisabled },
         });
       } else {
         res.status(400).json({ error: "Sai mật khẩu!" });

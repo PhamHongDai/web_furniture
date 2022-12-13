@@ -1,13 +1,12 @@
 const express = require("express");
 const {
   addProduct,
-  addProducts,
   getProductsByCategorySlug,
   getProductDetailsBySlug,
   setDisableProduct,
   getProducts,
   updateProduct,
-  updateQty,
+  getProductDisalbe,
   updateVariants,
   searchByProductName,
   getListProductByIds,
@@ -28,7 +27,6 @@ router.post(
   uploadCloud.array("productPicture"),
   addProduct
 );
-router.post("/addProducts", addProducts);
 router.get("/:slug/category", getProductsByCategorySlug);
 router.get("/:slug", getProductDetailsBySlug);
 router.post("/searchByProductName", searchByProductName);
@@ -38,8 +36,9 @@ router.post(
   adminMiddleware, setDisableProduct
 );
 router.post("/getProducts", getProducts);
+router.post("/getProductDisalbe", getProductDisalbe);
+
 router.post("/update", requireSignin, adminMiddleware, updateProduct);
-router.post("/updateQty", requireSignin, adminMiddleware, updateQty);
 router.post("/updateVariants", requireSignin, adminMiddleware, updateVariants);
 router.post(
   "/addProductReview",

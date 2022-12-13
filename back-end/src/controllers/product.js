@@ -35,60 +35,6 @@ exports.addProduct = (req, res) => {
     });
 };
 
-exports.addProducts = async (req, res) => {
-    const items = req.body.items;
-    var count = 0;
-    for (let i = 0; i < items.length; i++) {
-        const {
-            name,
-            price,
-            description,
-            category,
-            discountPercent,
-            variants,
-            productPictures,
-        } = items[i];
-        const product = new Product({
-            name: name,
-            slug: `${slugify(name)}-${shortid.generate()}`,
-            price,
-            description,
-            productPictures,
-            variants,
-            discountPercent,
-            category,
-        });
-        try {
-            await product.save();
-            count++;
-        } catch (error) {
-        }
-    }
-    res.status(200).json({count});
-};
-
-
-exports.updateQty = (req, res) => {
-    const {productId, variantId, quantity} = req.body;
-    Product.findOne({_id: productId}).exec((error, product) => {
-        if (error) return res.status(400).json({error});
-        const foundVariant = product.variants.find(
-            (variant) => variant._id == variantId
-        );
-        if (foundVariant) {
-            foundVariant.quantity = quantity;
-            product.save((error, product) => {
-                if (error) return res.status(400).json({error});
-                if (product) {
-                    res.status(202).json({product});
-                } else {
-                    res.status(400).json({error: "something went wrong"});
-                }
-            });
-        }
-    });
-};
-
 exports.updateVariants = (req, res) => {
     const {productId, variants} = req.body;
     Product.updateOne({_id: productId}, {variants}).exec((error, result) => {
@@ -154,26 +100,28 @@ exports.updateProduct = async (req, res) => {
 
     const {_id, name, price, description, category, discountPercent, variant} = req.body;
     console.log(req.body);
-    let variants = [];
-    for (let i = 0; i < variant.length; i += 2) {
-        variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
-    }
-    let productPictures = [];
-    if (req.files.length > 0) {
-        productPictures = req.files.map((file) => {
-            return file.path;
-        });
-    }
-    const product = new Product({
+    
+    const product = {
         name: name,
         slug: `${slugify(name)}-${shortid.generate()}`,
         price,
         description,
-        productPictures,
-        variants,
         discountPercent,
         category,
-    });
+    };
+    if (req.file) {
+        let productPictures = [];
+        productPictures = req.files.map((file) => {
+            return file.path;
+        });
+    }
+    if (req.variant) {
+        let variants = [];
+        for (let i = 0; i < variant.length; i += 2) {
+        variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
+        }
+        product.variant = variants
+    }
     Product.findOneAndUpdate({_id}, product, {
             new: true, upsert: true
         }
@@ -228,7 +176,6 @@ exports.setDisableProduct = async (req, res) => {
     }
 };
 
-
 async function getProduct(res, status = 200) {
     try {
         const products = await Product.find({isDisabled: {$ne: true}})
@@ -251,6 +198,16 @@ async function getProduct(res, status = 200) {
     } catch (error) {
         res.status(400).json({error});
     }
+}
+exports.getProductDisalbe=(res, req) => {
+    Product.find({isDisabled: true}).exec((error, categories) => {
+        if (error) {
+            return res.status(400).json({error});
+        } else {
+            const categoriesList = createCategories(categories);
+            return res.status(200).json({categories: categoriesList});
+        }
+    });
 }
 
 exports.getProducts = async (req, res) => {

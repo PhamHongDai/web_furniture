@@ -10,6 +10,7 @@ const {
   getUsers,
   setDisableUser,
   updateUserInfo,
+  getUsersDisabled
 } = require("../controllers/user");
 
 const router = express.Router();
@@ -24,4 +25,6 @@ router.post(
 );
 router.post("/setDisableUser", requireSignin, adminMiddleware, setDisableUser);
 router.post("/getUsers", getUsers);
+router.post("/getUsersDisabled", getUsersDisabled);
+
 module.exports = router;

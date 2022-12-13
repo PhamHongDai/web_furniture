@@ -59,16 +59,6 @@ exports.getCategories = (req, res) => {
     getCategory(res);
 };
 
-exports.getFlatCategories = (req, res) => {
-    Category.find({}).exec((error, categories) => {
-        if (error) {
-            return res.status(400).json({error});
-        } else {
-            return res.status(200).json({categories});
-        }
-    });
-};
-
 exports.setDisableCategory = async (req, res) => {
     const {_id} = req.body;
     console.log("hello")
@@ -98,3 +88,30 @@ exports.updateCategories = async (req, res) => {
     });
     res.status(202).json({ category: newCategory });
 };
+
+async function getCategory(res, status = 200) {
+    Category.find({isDisabled: {$ne: true}}).exec((error, categories) => {
+        if (error) {
+            return res.status(400).json({error});
+        } else {
+            const categoriesList = createCategories(categories);
+            return res.status(200).json({categories: categoriesList});
+        }
+    });
+}
+
+exports.getCategoryDisabled = (req, res) => {
+    Category.find({ isDisabled: { $ne: false } }).exec((error, users) => {
+      if (error) {
+        return res.status(400).json({ error });
+      }
+      if (users) {
+        return res.status(200).json({ users });
+      } else {
+        return res.status(400).json({ error: "something went wrong" });
+      }
+    });
+  };
+
+
+  
