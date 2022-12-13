@@ -16,7 +16,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div style={{ display: 'flex', overflow: 'scroll initial' }}>
+    <div style={{ display: 'flex', overflow: 'scroll initial',zIndex: "900" }}>
       <CDBSidebar textColor="#fff" backgroundColor="#d1d0d0">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
@@ -26,19 +26,19 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
+            <NavLink to="/">
               <CDBSidebarMenuItem icon="columns">Bảng điều khiển</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/products" activeClassName="activeClicked">
+            <NavLink to="/products">
               <CDBSidebarMenuItem icon="th-large">Sản phẩm</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/users" activeClassName="activeClicked">
+            <NavLink to="/users">
               <CDBSidebarMenuItem icon="user">Người dùng</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/catagories" activeClassName="activeClicked">
+            <NavLink to="/catagories">
               <CDBSidebarMenuItem icon="table">Danh mục</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/orders" activeClassName="activeClicked">
+            <NavLink to="/orders">
               <CDBSidebarMenuItem icon="chart-line">Đơn mua</CDBSidebarMenuItem>
             </NavLink>
 

@@ -26,7 +26,7 @@ const Head = styled.header`
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 1200;
+  z-index: 1000;
   box-shadow: 3px 3px 8px -3px #ddd;
 `
 

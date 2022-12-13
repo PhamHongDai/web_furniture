@@ -90,7 +90,7 @@ const Orders = () => {
               </td>
               <td>{item.paymentStatus}</td>
               <td>
-                <i class="ri-edit-line"></i>
+                <i className="ri-edit-line"></i>
                 <> </>
                 <i className="ri-delete-bin-line"></i>
               </td>

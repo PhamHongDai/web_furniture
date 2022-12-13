@@ -11,6 +11,16 @@ export const getCategories = createAsyncThunk("category/getCategories", async (r
     }
 });
 
+export const addCategories = createAsyncThunk("category/add", async(category, { rejectWithValue } ) => {
+    try {
+        const response = await categoryApi.addCategories(category);
+        return response;
+    }
+    catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
 export const categorySlice = createSlice({
     name: "category",
     initialState: {
@@ -27,6 +37,17 @@ export const categorySlice = createSlice({
             state.error = action.error;
         },
         [getCategories.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.categories = action.payload.data.categories;
+        },
+        [addCategories.pending]: (state) => {
+            state.loading = true;
+        },
+        [addCategories.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        [addCategories.fulfilled]: (state, action) => {
             state.loading = false;
             state.categories = action.payload.data.categories;
         },

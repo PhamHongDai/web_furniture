@@ -42,7 +42,12 @@ const productSchema = new mongoose.Schema(
         createdAt: { type: Date, default: Date.now },
       },
     ],
-    variants: [variantSchema],
+    variants: [
+      {
+        name: {type: String, required: true},
+        quantity: {type: Number, required: true},
+      }
+    ],
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",

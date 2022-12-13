@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import AddProductDialog from "../../components/UI/AddProductDialog";
 import { addProduct, deleteProductById } from "../../slices/productSlice";
-import { json } from "react-router-dom";
+import { toast } from "react-toastify";
+
 const Container = styled.div`
   display: flex;
   height: 100%;
@@ -52,6 +53,7 @@ const Products = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.product);
   const [show, setShow] = useState(false);
+  const [formMode, setFormMode] = useState(true);
   const [productInfo, setProductInfo] = useState({
     name: "",
     price: 0,
@@ -65,7 +67,6 @@ const Products = () => {
 
   const handleName = (event) => {
     setProductInfo({ ...productInfo, name: event.target.value });
-    console.log(productInfo)
   };
 
   const handlePrice = (event) => {
@@ -118,20 +119,51 @@ const Products = () => {
     }
     try {
       const res = await dispatch(addProduct(form));
-      if (res.status === 200) {
-        alert("Thêm Thành Công !");
+      if (res.payload.status === 200) {
+        toast.info("Thêm Thành Công !");
       }
     } catch (err) {
-      alert("Vui lòng kiểm tra lại các thông tin cho chính xác !");
+      toast.error("Vui lòng kiểm tra lại các thông tin cho chính xác !");
     }
   }
 
   const handleDeleteProduct = async (id) => {
     const response = await dispatch(deleteProductById({ productId: id })).unwrap();
     if(response.status === 202){
-      alert('Xóa Thành Công');
+      toast.warning('Xóa Thành Công');
     }
   }
+
+  const handleAddBtn = () => {
+    setShow((prev) => !prev);
+    setFormMode(true);
+    setProductInfo({
+      name: "",
+      price: 0,
+      description: "",
+      category: "",
+      discountPercent: 0,
+      productPicture: [],
+      productPictureToChange: []
+    });
+    setVariant([{name: "", quantity: 0}]);
+  }
+
+  const handleEditBtn = (item) => {
+    setShow((prev) => !prev);
+    setFormMode(false);
+    setProductInfo({
+      name: item.name,
+      price: item.price,
+      description: item.description,
+      category: item.category._id,
+      discountPercent: item.discountPercent,
+      productPicture: [],
+      productPictureToChange: []
+    });
+    setVariant(item.variants);
+    
+  };
 
   return (
     <Container>
@@ -141,11 +173,13 @@ const Products = () => {
           <h4>
             Danh sách sản phẩm
           </h4>
-          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={() => setShow((prev) => !prev)}>Thêm sản phẩm</motion.button>
+          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={() => handleAddBtn()}>Thêm sản phẩm</motion.button>
         </div>
         <AddProductDialog 
           show={show}
           setShow={setShow}
+          formMode={formMode}
+          productInfo={productInfo}
           variant={variant}
           setVariant={setVariant}
           handleName={handleName}
@@ -190,7 +224,7 @@ const Products = () => {
               <td>{item.discountPercent}%</td>
               <td><img src={item.productPictures[0]} alt=''></img></td>
               <td>
-                <i className="ri-edit-line"></i>
+                <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
                 <> </>
                 <i className="ri-delete-bin-line" onClick={() =>handleDeleteProduct(item._id)}></i>
               </td>
