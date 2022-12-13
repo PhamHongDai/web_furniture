@@ -33,11 +33,6 @@ exports.addCategory = (req, res) => {
   if (req.file) {
     categoryObj.categoryImage = req.file.path;
   }
-
-  if (parentId) {
-    categoryObj.parentId = parentId;
-  }
-
   const cate = new Category(categoryObj);
   cate.save((error, category) => {
     if (error) {
@@ -70,7 +65,7 @@ exports.getFlatCategories = (req, res) => {
   });
 };
 
-exports.deleteCategories = async (req, res) => {
+exports.setDisableCategory = async (req, res) => {
   const { ids } = req.body.payload;
   const deletedCategories = [];
   for (let i = 0; i < ids.length; i++) {
@@ -82,7 +77,6 @@ exports.deleteCategories = async (req, res) => {
     );
     deletedCategories.push(deleteCategory);
   }
-
   if (deletedCategories.length == ids.length) {
     res.status(201).json({ message: "Categories removed" });
   } else {
@@ -91,12 +85,12 @@ exports.deleteCategories = async (req, res) => {
 };
 
 exports.updateCategories = async (req, res) => {
-  const { _id, name, parentId } = req.body;
+  const { _id, name} = req.body;
   const category = {
     name,
   };
-  if (parentId !== "") {
-    category.parentId = parentId;
+  if (req.file) {
+    category.categoryImage = req.file.path;
   }
   const newCategory = await Category.findOneAndUpdate({ _id }, category, {
     new: true,
