@@ -10,6 +10,11 @@ import {
 import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
+
+  const handleGoTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <div style={{ display: 'flex', overflow: 'scroll initial' }}>
       <CDBSidebar textColor="#fff" backgroundColor="#d1d0d0">
@@ -39,7 +44,17 @@ const Sidebar = () => {
 
           </CDBSidebarMenu>
         </CDBSidebarContent>
-
+        <CDBSidebarFooter style={{ textAlign: 'center' }}>
+          <div
+            style={{
+              padding: '20px 5px',
+              cursor: 'pointer'
+            }}
+            onClick={handleGoTop}
+          >
+            Go Top
+          </div>
+        </CDBSidebarFooter>
       </CDBSidebar>
     </div>
   );

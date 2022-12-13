@@ -5,7 +5,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import AddProductDialog from "../../components/UI/AddProductDialog";
-import { addProduct } from "../../slices/productSlice";
+import { addProduct, deleteProductById } from "../../slices/productSlice";
+import { json } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   height: 100%;
@@ -57,10 +58,10 @@ const Products = () => {
     description: "",
     category: "",
     discountPercent: 0,
-    variants: [],
     productPicture: [],
     productPictureToChange: []
   });
+  const [variant, setVariant] = useState([{name: "", quantity: 0}]);
 
   const handleName = (event) => {
     setProductInfo({ ...productInfo, name: event.target.value });
@@ -83,8 +84,8 @@ const Products = () => {
     setProductInfo({ ...productInfo, discountPercent: event.target.value });
   };
   
-  const handleVariants = (event) => {
-    setProductInfo({ ...productInfo, variants: event.target.value });
+  const handleVariants = (a) => {
+    setProductInfo({ ...productInfo, variants: a});
   };
 
   const handleProductPicture = (event) => {
@@ -108,17 +109,28 @@ const Products = () => {
     form.append("description", productInfo.description);
     form.append("category", productInfo.category);
     form.append("discountPercent", productInfo.discountPercent);
-    form.append("variants", JSON.stringify(productInfo.variants));
+    for(let i = 0; i < variant.length; i++) {
+        form.append("variant.name."+ `${i}`, variant[i].name);
+        form.append(`variant.quantity.${i}`, variant[i].quantity);
+      console.log(i);
+    }
     for (let pic of productInfo.productPictureToChange) {
       form.append("productPicture", pic);
     }
     try {
-      const res = await dispatch(addProduct(form)).unwrap();
+      const res = await dispatch(addProduct(form));
       if (res.status === 201) {
-        alert("Add Thành Công !");
+        alert("Thêm Thành Công !");
       }
     } catch (err) {
       alert("Vui lòng kiểm tra lại các thông tin cho chính xác !");
+    }
+  }
+
+  const handleDeleteProduct = async (id) => {
+    const response = await dispatch(deleteProductById({ productId: id })).unwrap();
+    if(response.status === 202){
+      alert('Xóa Thành Công');
     }
   }
 
@@ -135,6 +147,9 @@ const Products = () => {
         <AddProductDialog 
           show={show}
           setShow={setShow}
+          productInfo={productInfo}
+          variant={variant}
+          setVariant={setVariant}
           handleName={handleName}
           handlePrice={handlePrice}
           handleDescription={handleDescription}
@@ -179,7 +194,7 @@ const Products = () => {
               <td>
                 <i className="ri-edit-line"></i>
                 <> </>
-                <i className="ri-delete-bin-line"></i>
+                <i className="ri-delete-bin-line" onClick={() =>handleDeleteProduct(item._id)}></i>
               </td>
             </tr>
           ))

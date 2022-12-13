@@ -9,25 +9,41 @@ import { useSelector } from 'react-redux';
 const AddProductDialog = ({ 
   show,
   setShow,
+  variant,
+  setVariant,
   handleName,
   handlePrice,
   handleDescription,
   handleCategory,
   handleDiscountPercent,
-  handleVariants,
   handleProductPicture,
   handleAddProduct
 }) => {
   const { categories } = useSelector((state) => state.category);
-  const [variantList, setVariantList] = useState([{name: '', quantity: 0}])
   const handleVariantAdd = () => {
-    setVariantList([...variantList, {name: '', quantity: 0}]);
+    setVariant([...variant, {name: '', quantity: 0}]);
   }
   const handleVariantRemove = (index) => {
-    const list = [...variantList];
+    const list = [...variant];
     list.splice(index,1);
-    setVariantList(list)
+    setVariant(list)
   }
+
+  const handleVariantChange = (e, key ,index) => {
+    if(key === 0)
+    {
+      const { name, value } = e.target;
+      const list = [...variant];
+      list[index][name] = value;
+      setVariant(list);
+    } else if (key === 1) {
+      const { name, value } = e.target;
+      const list = [...variant];
+      list[index][name] = parseInt(value);
+      setVariant(list);
+    }
+  }
+
   return (
     <>
       <Modal
@@ -97,26 +113,32 @@ const AddProductDialog = ({
                   <Form.Label>Loại</Form.Label>
                   <Button variant="secondary" size="sm" 
                     onClick={handleVariantAdd} 
-                    style={variantList.length < 3 ? {}:{display: "none"}}>Thêm</Button>
+                    style={variant.length < 3 ? {}:{display: "none"}}>Thêm</Button>
                 </div>
                 {
-                  variantList.map((item, index) => (
+                  variant.map((item, index) => (
                     <Row key={index}>
                       <Col xs={12} md={5}>
                         <Form.Group className="mb-3">
-                          <Form.Control type="text" placeholder="Tên loại" />
+                          <Form.Control type="text" placeholder="Tên loại" 
+                            name="name"
+                            value={item.name}
+                            onChange={(e) => handleVariantChange(e, 0, index)}/>
                         </Form.Group>
                       </Col>
                       <Col xs={12} md={5}>
                         <Form.Group className="mb-3">
-                          <Form.Control type="number" placeholder="Số lượng" />
+                          <Form.Control type="number" placeholder="Số lượng" 
+                            name="quantity"
+                            value={item.quantity}
+                            onChange={(e) => handleVariantChange(e, 1, index)}/>
                         </Form.Group>
                       </Col>
                       <Col xs={12} md={2} style={{paddingTop: "5px"}}>
                       <Form.Group className="mb-3">
                           <i className="ri-delete-bin-line" 
                               onClick={() => handleVariantRemove(index)}
-                              style={variantList.length > 1 ? {}:{display: "none"}}/>
+                              style={variant.length > 1 ? {}:{display: "none"}}/>
                       </Form.Group>
                       </Col>
                     </Row>
