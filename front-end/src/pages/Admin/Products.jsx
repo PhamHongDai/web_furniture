@@ -110,16 +110,15 @@ const Products = () => {
     form.append("category", productInfo.category);
     form.append("discountPercent", productInfo.discountPercent);
     for(let i = 0; i < variant.length; i++) {
-        form.append("variant.name."+ `${i}`, variant[i].name);
-        form.append(`variant.quantity.${i}`, variant[i].quantity);
-      console.log(i);
+        form.append(`variant[]` , variant[i].name);
+        form.append(`variant[]`, variant[i].quantity);
     }
     for (let pic of productInfo.productPictureToChange) {
       form.append("productPicture", pic);
     }
     try {
       const res = await dispatch(addProduct(form));
-      if (res.status === 201) {
+      if (res.status === 200) {
         alert("Thêm Thành Công !");
       }
     } catch (err) {
@@ -147,7 +146,6 @@ const Products = () => {
         <AddProductDialog 
           show={show}
           setShow={setShow}
-          productInfo={productInfo}
           variant={variant}
           setVariant={setVariant}
           handleName={handleName}
