@@ -14,10 +14,10 @@ const categorySchema = new mongoose.Schema(
         categoryImage: {
             type: String
         },
-        parentId: {
-            type: String,
-        },
-        isDisabled: false
+        isDisabled: {
+            type : Boolean,
+            default: false
+        }
     },
     { timestamps: true }
 );

@@ -5,13 +5,12 @@ const {
   getProductsByCategorySlug,
   getProductById,
   getProductDetailsBySlug,
-  deleteProductById,
+  setDisableProduct,
   getProducts,
   updateProduct,
   updateQty,
   updateVariants,
   searchByProductName,
-  updateDiscountPercentByCategory,
   getListProductByIds,
   addProductReview,
 } = require("../controllers/product");
@@ -36,21 +35,14 @@ router.get("/:slug", getProductDetailsBySlug);
 router.post("/searchByProductName", searchByProductName);
 router.post("/getById", getProductById);
 router.post(
-  "/deleteProductById",
+  "/setDisableProduct",
   requireSignin,
-  adminMiddleware,
-  deleteProductById
+  adminMiddleware, setDisableProduct
 );
 router.post("/getProducts", getProducts);
 router.post("/update", requireSignin, adminMiddleware, updateProduct);
 router.post("/updateQty", requireSignin, adminMiddleware, updateQty);
 router.post("/updateVariants", requireSignin, adminMiddleware, updateVariants);
-router.post(
-  "/updateDiscountPercentByCategory",
-  requireSignin,
-  adminMiddleware,
-  updateDiscountPercentByCategory
-);
 router.post(
   "/addProductReview",
   requireSignin,

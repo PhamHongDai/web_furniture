@@ -53,7 +53,10 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    isDisabled: false,
+    isDisabled:{
+        type : Boolean,
+        default :false
+    }
   },
   { timestamps: true }
 );

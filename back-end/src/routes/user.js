@@ -8,7 +8,7 @@ const {
 const {
   updateUser,
   getUsers,
-  deleteUserById,
+  setDisableUser,
   updateUserInfo,
 } = require("../controllers/user");
 
@@ -22,6 +22,6 @@ router.post(
   uploadCloud.single("profilePicture"),
   updateUserInfo
 );
-router.post("/delete", requireSignin, adminMiddleware, deleteUserById);
+router.post("/setDisableUser", requireSignin, adminMiddleware, setDisableUser);
 router.post("/getUsers", getUsers);
 module.exports = router;

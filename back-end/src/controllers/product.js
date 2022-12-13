@@ -1,4 +1,4 @@
-const { Product, Category } = require("../models");
+const { Product, Category, User} = require("../models");
 const shortid = require("shortid");
 const slugify = require("slugify");
 
@@ -66,16 +66,6 @@ exports.addProducts = async (req, res) => {
   res.status(200).json({ count });
 };
 
-exports.updateDiscountPercentByCategory = (req, res) => {
-  const { categoryId, discountPercent } = req.body;
-  Product.updateMany(
-    { category: categoryId },
-    { $set: { discountPercent } }
-  ).exec((error, result) => {
-    if (error) return res.status(400).json({ error });
-    res.status(202).json({ result });
-  });
-};
 
 exports.updateQty = (req, res) => {
   const { productId, variantId, quantity } = req.body;
@@ -218,21 +208,18 @@ exports.getProductDetailsBySlug = (req, res) => {
   }
 };
 
-exports.deleteProductById = (req, res) => {
-  const { productId } = req.body;
-  if (productId) {
-    Product.updateOne({ _id: productId }, { isDisabled: true }).exec(
-      (error, result) => {
-        if (error) return res.status(400).json({ error });
-        if (result) {
-          res.status(202).json({ result });
-        } else {
-          res.status(400).json({ error: "something went wrong" });
-        }
-      }
-    );
-  } else {
-    return res.status(400).json({ error: "Params required" });
+exports.setDisableProduct = async (req, res) => {
+  const { _id } = req.body;
+  console.log("hello")
+  try {
+    const product = await Product.findOneAndUpdate({ _id }, { isDisabled: true });
+    if (product) {
+      res.status(200).json({ message: "Disabled successfully" });
+    } else {
+      res.status(400).json({ error: "no found product" });
+    }
+  } catch (error) {
+    res.status(400).json({ error });
   }
 };
 

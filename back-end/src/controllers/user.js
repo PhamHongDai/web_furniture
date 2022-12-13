@@ -65,7 +65,7 @@ exports.updateUserInfo = async (req, res) => {
   }
 };
 
-exports.deleteUserById = async (req, res) => {
+exports.setDisableUser = async (req, res) => {
   const { _id } = req.body;
   try {
     const user = await User.findOneAndUpdate({ _id }, { isDisabled: true });
