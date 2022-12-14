@@ -94,11 +94,16 @@ exports.updateStatus = (req, res) => {
         res.status(400).json({ error: "something went wrong" });
       }
     });
+  };
+
+
+  exports.updatePaymentStatus = (req, res) => {
+    const { orderId , paymentStatus} = req.body;
     if(req.body.paymentStatus){
     Order.findOneAndUpdate(
-      { _id: orderId },
-      { paymentStatus: paymentStatus },
-      { new: true, upsert: true }
+        { _id: orderId },
+        { paymentStatus: paymentStatus },
+        { new: true, upsert: true }
     ).exec((error, order) => {
       if (error) return res.status(400).json({ error });
       if (order) {
@@ -108,7 +113,7 @@ exports.updateStatus = (req, res) => {
       }
     });
   }}
-  };
+};
 
 exports.getAllOrders = async (req, res) => {
   try {
