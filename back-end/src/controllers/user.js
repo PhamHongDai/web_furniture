@@ -2,7 +2,7 @@ const { User, Otp } = require("../models");
 const bcrypt = require("bcrypt");
 
 exports.getUsers = (req, res) => {
-  User.find({ isDisabled: { $ne: true } }).exec((error, users) => {
+  User.find({ isDisabled: { $ne: true } }).sort({createdAt: -1}).exec((error, users) => {
     if (error) {
       return res.status(400).json({ error });
     }

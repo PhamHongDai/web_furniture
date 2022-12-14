@@ -14,10 +14,21 @@ const AddCategotyDialog = ({
   handleName,
   handleCategoryImage,
   handleAddCategory,
+  handleUpdateCategory,
+  handleIsDisabled,
 }) => {
-  const handleSubmit = () => {
-    handleAddCategory();
-    console.log(categoryInfo)
+  const handleSubmit = async () => {
+    if (categoryInfo.name.length === 0) {
+      toast.error("Vui lòng nhập tên danh mục")
+    } else if (categoryInfo.categoryImageToChange === null && formMode === true) {
+      toast.error("Vui lòng chọn ảnh danh mục")
+    } else if (formMode) {
+      await handleAddCategory();
+      setShow((prev) => !prev);
+    } else {
+      await handleUpdateCategory();
+      setShow((prev) => !prev);
+    }
   }
   return (
     <>
@@ -45,17 +56,33 @@ const AddCategotyDialog = ({
             </Form.Group>
             <Form.Group className="mb-3">
               <Row>
-                <Col xs={12} md={8}>
+                <Col xs={12} md={7}>
                   <Form.Label>Hình Ảnh</Form.Label>
                   <Form.Group className="mb-3">
                     <Form.Control
                       type="file" accept=".jpg,.jpeg,.png"
-                      onChange={handleCategoryImage}/>
+                      onChange={handleCategoryImage} />
                   </Form.Group>
                 </Col>
-                <Col xs={12} md={4}>
-                  <img style={{width: "80px", height: "80px", backgroundColor: "#f8f8f8", objectFit: "cover", borderRadius: "5px"}}
-                  src={categoryInfo.categoryImage} alt=''></img>
+                <Col xs={12} md={3} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  {
+                    formMode ? ("") : (
+                      <Form.Control
+                        style={{ width: "150px" }}
+                        as="select" className="text-center"
+                        defaultValue={categoryInfo.isDisable}
+                        onChange={handleIsDisabled}
+                      >
+                        <option>Chọn trạng thái</option>
+                        <option value="true">Khóa</option>
+                        <option value="false">Sẵn sàng</option>
+                      </Form.Control>
+                    )
+                  }
+                </Col>
+                <Col xs={12} md={2}>
+                  <img style={{ width: "80px", height: "80px", backgroundColor: "#f8f8f8", objectFit: "cover", borderRadius: "5px" }}
+                    src={categoryInfo.categoryImage} alt=''></img>
                 </Col>
               </Row>
             </Form.Group>

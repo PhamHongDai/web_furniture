@@ -53,7 +53,7 @@ const Users = () => {
           <h4>
             Danh sách người dùng
           </h4>
-          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Thêm người dùng</motion.button>
+          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Người dùng bị khóa</motion.button>
         </div>
         <Table striped>
         <thead>

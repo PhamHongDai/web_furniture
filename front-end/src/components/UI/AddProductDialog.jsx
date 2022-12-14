@@ -21,10 +21,11 @@ const AddProductDialog = ({
   handleDiscountPercent,
   handleProductPicture,
   handleAddProduct,
+  handleUpdateProduct,
 }) => {
   const { categories } = useSelector((state) => state.category);
   const handleVariantAdd = () => {
-    setVariant([...variant, { name: '', quantity: 0 }]);
+    setVariant([...variant, { name: "", quantity: 0}]);
   }
   const handleVariantRemove = (index) => {
     const list = [...variant];
@@ -70,7 +71,7 @@ const AddProductDialog = ({
         await handleAddProduct();
         setShow((prev) => !prev);
       } else {
-        console.log("edit");
+        await handleUpdateProduct();
         setShow((prev) => !prev);
       }
     }
@@ -149,13 +150,17 @@ const AddProductDialog = ({
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={7}>
+              <Col xs={12} md={5}>
                 <Form.Label>Hình Ảnh</Form.Label>
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="file" accept=".jpg,.jpeg,.png" multiple
                     onChange={handleProductPicture} />
                 </Form.Group>
+              </Col>
+              <Col xs={12} md={2}>
+                <img style={{width: "80px", height: "80px", backgroundColor: "#f8f8f8", objectFit: "cover", borderRadius: "5px"}}
+                  src={productInfo.productPictures[0]} alt=''></img>
               </Col>
               <Col xs={6} md={5}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>

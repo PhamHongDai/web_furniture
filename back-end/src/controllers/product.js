@@ -97,30 +97,29 @@ exports.getProductsByCategorySlug = (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
-
-    const {_id, name, price, description, category, discountPercent, variant} = req.body;
+    const {_id, name, price, description, category, discountPercent, variants} = req.body;
     console.log(req.body);
     
     const product = {
         name: name,
-        slug: `${slugify(name)}-${shortid.generate()}`,
         price,
         description,
-        discountPercent,
         category,
+        discountPercent,
     };
-    if (req.file) {
-        let productPictures = [];
-        productPictures = req.files.map((file) => {
-            return file.path;
-        });
-    }
-    if (req.variant) {
-        let variants = [];
-        for (let i = 0; i < variant.length; i += 2) {
-        variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
-        }
-        product.variant = variants
+    // if (req.files.length > 0) {
+    //     let productPictures = [];
+    //     productPictures = req.files.map((file) => {
+    //         return file.path;
+    //     });
+    //     product.productPictures = productPictures;
+    // } 
+    if (variants) {
+        // let variants = [];
+        // for (let i = 0; i < variant.length; i += 2) {
+        // variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
+        // }
+        product.variants = variants;
     }
     Product.findOneAndUpdate({_id}, product, {
             new: true, upsert: true
@@ -128,7 +127,7 @@ exports.updateProduct = async (req, res) => {
     ).exec((error, product) => {
         if (error) return res.status(400).json({error});
         if (product) {
-            getProduct(202)
+            getProduct(res, 202)
         } else {
             res.status(400).json({error: "something went wrong"});
         }
@@ -179,6 +178,7 @@ exports.setDisableProduct = async (req, res) => {
 async function getProduct(res, status = 200) {
     try {
         const products = await Product.find({isDisabled: {$ne: true}})
+            .sort({createdAt: -1})
             .populate({path: "category", select: "_id name categoryImage"})
             .populate({
                 path: "reviews",

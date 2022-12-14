@@ -11,6 +11,16 @@ export const getProducts = createAsyncThunk("product/getProducts", async (reject
     }
 });
 
+export const getProductDisalbe = createAsyncThunk("product/getProductDisalbe", async (rejectWithValue) => {
+    try {
+        const response = await productApi.getProductDisalbe();
+        return response;
+    }
+    catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
 export const getProductBySlug = createAsyncThunk("product/getProductBySlug", async (slug, rejectWithValue) => {
     try {
         const response = await productApi.getProductBySlug(slug);
@@ -102,6 +112,17 @@ export const productSlice = createSlice({
             state.error = action.error;
         },
         [getProducts.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.products = action.payload.data.products;
+        },
+        [getProductDisalbe.pending]: (state) => {
+            state.loading = true;
+        },
+        [getProductDisalbe.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        [getProductDisalbe.fulfilled]: (state, action) => {
             state.loading = false;
             state.products = action.payload.data.products;
         },

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Sidebar from "../../components/layout/Sidebar";
 import Table from 'react-bootstrap/Table';
+import Col from 'react-bootstrap/Col';
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import AddCategotyDialog from "../../components/UI/AddCatagoryDialog";
 import { toast } from "react-toastify";
-import { addCategories } from "../../slices/categorySlice";
+import { addCategories, getCategories, getCategoryDisabled, setDisableCategories, updateCategories } from "../../slices/categorySlice";
 
 const Container = styled.div`
   display: flex;
@@ -52,15 +53,22 @@ const Catagories = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.category);
   const [show, setShow] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
   const [formMode, setFormMode] = useState(true);
   const [categoryInfo,setCategoryInfo] = useState({
+    _id: "",
     name: "",
+    isDisable: false,
     categoryImage: null,
     categoryImageToChange: null,
   })
 
   const handleName = (event) => {
     setCategoryInfo({ ...categoryInfo, name: event.target.value });
+  };
+
+  const handleIsDisabled = (event) => {
+    setCategoryInfo({ ...categoryInfo, isDisable: event.target.value });
   };
 
   const handleCategoryImage = (e) => {
@@ -91,10 +99,28 @@ const Catagories = () => {
     }
   }
 
+  const handleUpdateCategory = async () => {
+    const form = new FormData();
+    form.append("_id", categoryInfo._id);
+    form.append("name", categoryInfo.name);
+    form.append("isDisabled", categoryInfo.isDisable);
+    form.append("categoryImage", categoryInfo.categoryImageToChange);
+    try {
+      const res = await dispatch(updateCategories(form));
+      
+      if (res.payload.status === 200) {
+        toast.warn("Sửa Thành Công !");
+      }
+    } catch (err) {
+      toast.error("Vui lòng kiểm tra lại các thông tin cho chính xác !");
+    }
+  }
+
   const handleAddBtn = () => {
     setShow((prev) => !prev);
     setFormMode(true);
     setCategoryInfo({
+      _id: "",
       name: "",
       categoryImage: null,
       categoryImageToChange: null,
@@ -105,12 +131,32 @@ const Catagories = () => {
     setShow((prev) => !prev);
     setFormMode(false);
     setCategoryInfo({
+      _id: item._id,
       name: item.name,
+      isDisable: isDisable,
       categoryImage: item.categoryImage,
     })
   }
-  const handleDeleteBtn = () => {
-
+  const handleSetDisableBtn = async(id) => {
+    const response = await dispatch(setDisableCategories({ _id: id }));
+    if(response.status === 200){
+      toast.warning('Khóa Thành Công');
+    }
+  }
+  const handleIsDisabledBtn = async() => {
+    if(!isDisable){
+      setIsDisable((prev) => !prev);
+      const response = await dispatch(getCategoryDisabled());
+      if(response.payload.status === 200){
+        toast.info('Danh sách danh mục bị khóa');
+      }
+    } else {
+      setIsDisable((prev) => !prev);
+      const response = await dispatch(getCategories());
+      if(response.payload.status === 200){
+        toast.info('Danh sách danh mục');
+      }
+    }
   }
 
   return (
@@ -118,10 +164,16 @@ const Catagories = () => {
       <Sidebar/>
       <Content>
         <div className="title">
-          <h4>
-            Danh sách danh mục
-          </h4>
-          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={() => handleAddBtn()}>Thêm danh mục</motion.button>
+          <Col>
+            <h4>
+              Danh sách danh mục
+            </h4>
+          </Col>
+          <Col style={{textAlign: "right"}}>
+            <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={handleIsDisabledBtn}>{!isDisable ? "Danh mục bị khóa" : "Danh sách danh mục" }</motion.button>
+            <> </>
+            <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={() => handleAddBtn()}>Thêm danh mục</motion.button>
+          </Col>
         </div>
         <AddCategotyDialog
         show={show}
@@ -131,6 +183,8 @@ const Catagories = () => {
         handleName={handleName}
         handleCategoryImage={handleCategoryImage}
         handleAddCategory={handleAddCategory}
+        handleUpdateCategory={handleUpdateCategory}
+        handleIsDisabled={handleIsDisabled}
         />
         <Table striped>
         <thead>
@@ -152,7 +206,7 @@ const Catagories = () => {
               <td>
                 <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
                 <> </>
-                <i className="ri-delete-bin-line" onClick={() => handleDeleteBtn()}></i>
+                <i className="ri-delete-bin-line" onClick={() => handleSetDisableBtn(item._id)}></i>
               </td>
             </tr>
           ))

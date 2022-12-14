@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/layout/Sidebar";
 import Table from 'react-bootstrap/Table';
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import InfoOrderDialog from "../../components/UI/InfoOrderDialog";
+import UpdateOrderDialog from "../../components/UI/UpdateOrderDialog";
 
 const Container = styled.div`
   display: flex;
@@ -46,6 +48,51 @@ const Content = styled.div`
 `
 const Orders = () => {
   const { orders } = useSelector((state) => state.order);
+  const [show, setShow] = useState(false);
+  const [showe, setShowe] = useState(false);
+  const [orderInfo, setOrderInfo] = useState({
+    items: [],
+    orderStatus: '',
+    paymentStatus: '',
+    orderStatusL: [],
+  });
+  const handleOrderStatus = (e) => {
+    setOrderInfo({...orderInfo, orderStatus: e.target.value});
+  }
+  const handlePaymentStatus = (e) => {
+    setOrderInfo({...orderInfo, paymentStatus: e.target.value});
+  }
+  const handleInfoBtn = (item) => {
+    setShow((prev) => !prev);
+    let status = 0;
+    item.orderStatus.map((item, index) => {
+      if (item.isCompleted === true)
+      {
+        status = index;
+      }})
+    setOrderInfo({
+      items: item.items,
+      paymentStatus: item.paymentStatus,
+      orderStatus: item.orderStatus[status].type,
+      orderStatusL: item.orderStatus
+    });
+  };
+  const handleEditBtn = (item) => {
+    setShowe((prev) => !prev);
+    let status = 0;
+    item.orderStatus.map((item, index) => {
+      if (item.isCompleted === true)
+      {
+        status = index;
+      }})
+    setOrderInfo({
+      items: item.items,
+      paymentStatus: item.paymentStatus,
+      orderStatus: item.orderStatus[status].type,
+      orderStatusL: item.orderStatus
+    });
+  };
+
   return (
     <Container>
       <Sidebar/>
@@ -56,11 +103,23 @@ const Orders = () => {
           </h4>
           <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Thêm đơn hàng</motion.button>
         </div>
+        <InfoOrderDialog
+        show={show}
+        setShow={setShow}
+        orderInfo={orderInfo}
+        />
+        <UpdateOrderDialog
+          showe={showe}
+          setShowe={setShowe}
+          orderInfo={orderInfo}
+          handleOrderStatus={handleOrderStatus}
+          handlePaymentStatus={handlePaymentStatus}
+          />
         <Table striped>
         <thead>
           <tr>
             <th>#</th>
-            <th>Tên người dùng</th>
+            <th>Tên người đặt</th>
             <th>Địa chỉ</th>
             <th>Số điện thoại</th>
             <th>Tổng tiền</th>
@@ -90,9 +149,9 @@ const Orders = () => {
               </td>
               <td>{item.paymentStatus}</td>
               <td>
-                <i className="ri-edit-line"></i>
+                <i className="ri-information-line" onClick={() => handleInfoBtn(item)}></i>
                 <> </>
-                <i className="ri-delete-bin-line"></i>
+                <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
               </td>
             </tr>
           )})

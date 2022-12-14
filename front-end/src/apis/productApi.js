@@ -5,6 +5,10 @@ const productApi = {
         const url = "/product/getProducts";
         return axios.post(url);
     },
+    getProductDisalbe: () => {
+        const url = "/product/getProductDisalbe";
+        return axios.post(url);
+    },
     getProductBySlug: (slug) => {
         const url = `/product/${slug}`;
         return axios.get(url);

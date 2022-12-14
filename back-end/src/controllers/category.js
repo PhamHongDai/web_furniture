@@ -39,13 +39,13 @@ exports.addCategory = (req, res) => {
             return res.status(400).json({error});
         }
         if (category) {
-            return res.status(201).json({category});
+            getCategory(res);
         }
     });
 };
 
 async function getCategory(res, status = 200) {
-    Category.find({isDisabled: {$ne: true}}).exec((error, categories) => {
+    Category.find({isDisabled: {$ne: true}}).sort({createdAt: -1}).exec((error, categories) => {
         if (error) {
             return res.status(400).json({error});
         } else {
@@ -66,7 +66,7 @@ exports.setDisableCategory = async (req, res) => {
         const category = await Category.findOneAndUpdate({_id}, {isDisabled: true});
         if (category) {
             const product = await Product.updateMany({ "category" : _id },{"$set":{"isDisabled": true}})
-            res.status(200).json({message: "Disabled category successfully"});
+            getCategory(res);
         } else {
             res.status(400).json({error: "no found product"});
         }
@@ -76,40 +76,31 @@ exports.setDisableCategory = async (req, res) => {
 };
 
 exports.updateCategories = async (req, res) => {
-    const { _id, name} = req.body;
+    const { _id, name , isDisabled} = req.body;
+    console.log({ _id, name , isDisabled})
     const category = {
         name,
     };
     if (req.file) {
         category.categoryImage = req.file.path;
     }
+    if (isDisabled){
+        category.isDisabled = isDisabled;
+    }
     const newCategory = await Category.findOneAndUpdate({ _id }, category, {
         new: true,
     });
-    res.status(202).json({ category: newCategory });
+    getCategory(res);
 };
 
-async function getCategory(res, status = 200) {
-    Category.find({isDisabled: {$ne: true}}).exec((error, categories) => {
+exports.getCategoryDisabled = (req, res) => {
+    Category.find({isDisabled: {$ne: false}}).sort({createdAt: -1}).exec((error, categories) => {
         if (error) {
             return res.status(400).json({error});
         } else {
             const categoriesList = createCategories(categories);
             return res.status(200).json({categories: categoriesList});
         }
-    });
-}
-
-exports.getCategoryDisabled = (req, res) => {
-    Category.find({ isDisabled: { $ne: false } }).exec((error, users) => {
-      if (error) {
-        return res.status(400).json({ error });
-      }
-      if (users) {
-        return res.status(200).json({ users });
-      } else {
-        return res.status(400).json({ error: "something went wrong" });
-      }
     });
   };
 

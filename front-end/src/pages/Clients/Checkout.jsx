@@ -86,7 +86,12 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState({
+    _id: "",
+    address :"",
+    phone:"",
+    name: "",
+  });
   const orderItems = location.state.selected;
   const { deliveryInfo, loading } = useSelector((state) => state.address);
   const shippingFee = 30000;
@@ -97,9 +102,9 @@ const Checkout = () => {
         (add) => add.isDefault === true
       );
       if (defaultAddress) {
-        setAddress(defaultAddress);
+        setAddress({_id: defaultAddress._id, name: defaultAddress.name, phone: defaultAddress.phoneNumber, address: defaultAddress.address});
       } else {
-        setAddress(deliveryInfo.address[0]);
+        setAddress({_id: deliveryInfo.address[0]._id, name: deliveryInfo.address[0].name, phone: deliveryInfo.address[0].phoneNumber, address: deliveryInfo.address[0].address});
       }
     }
   };
@@ -135,8 +140,9 @@ const Checkout = () => {
 
   //handlePayment
   const handlePayment = async () => {
+
     const order = {
-      address: address._id,
+      address: address,
       totalAmount,
       paymentStatus: "pending",
       paymentType: "cod",
@@ -164,7 +170,7 @@ const Checkout = () => {
     const newAddress = deliveryInfo.address.find(
       (add) => add._id === e.target.value
     );
-    setAddress(newAddress);
+    setAddress({_id: newAddress._id, name: newAddress.name, phone: newAddress.phoneNumber, address: newAddress.address});
   };
 
   useEffect(() => {
@@ -199,7 +205,7 @@ const Checkout = () => {
                     </div>
                     <div className="item-x">
                       <label>Số điện thoại:</label>
-                      <span>{address.phoneNumber}</span>
+                      <span>{address.phone}</span>
                     </div>
                     <div className="item-x">
                       <label>Địa chỉ:</label>
