@@ -99,7 +99,7 @@ exports.getProductsByCategorySlug = (req, res) => {
 exports.updateProduct = async (req, res) => {
     const {_id, name, price, description, category, discountPercent, variants} = req.body;
     console.log(req.body);
-    
+
     const product = {
         name: name,
         price,
@@ -107,8 +107,6 @@ exports.updateProduct = async (req, res) => {
         category,
         discountPercent,
     };
-<<<<<<< HEAD
-    
     if (req.file) {
         let productPictures = [];
         productPictures = req.files.map((file) => {
@@ -118,24 +116,9 @@ exports.updateProduct = async (req, res) => {
     if (req.variant) {
         let variants = [];
         for (let i = 0; i < variant.length; i += 2) {
-        variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
+            variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
         }
         product.variant = variants
-=======
-    // if (req.files.length > 0) {
-    //     let productPictures = [];
-    //     productPictures = req.files.map((file) => {
-    //         return file.path;
-    //     });
-    //     product.productPictures = productPictures;
-    // } 
-    if (variants) {
-        // let variants = [];
-        // for (let i = 0; i < variant.length; i += 2) {
-        // variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
-        // }
-        product.variants = variants;
->>>>>>> 9ae0858bbcb0f87e7310be1c3993b84850775e09
     }
     Product.findOneAndUpdate({_id}, product, {
             new: true, upsert: true
@@ -225,7 +208,7 @@ async function getProductDisable(res,status = 200) {
     });
 }
 exports.getProductsDisable= async(req, res) => {
-  getProductDisable(res);
+    getProductDisable(res);
 }
 
 exports.getProducts = async (req, res) => {

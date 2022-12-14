@@ -94,6 +94,7 @@ exports.updateStatus = (req, res) => {
         res.status(400).json({ error: "something went wrong" });
       }
     });
+    if(req.body.paymentStatus){
     Order.findOneAndUpdate(
       { _id: orderId },
       { paymentStatus: paymentStatus },
@@ -106,7 +107,7 @@ exports.updateStatus = (req, res) => {
         res.status(400).json({ error: "something went wrong" });
       }
     });
-  }
+  }}
   };
 
 exports.getAllOrders = async (req, res) => {

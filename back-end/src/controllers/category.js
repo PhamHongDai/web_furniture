@@ -103,19 +103,19 @@ exports.getCategoryDisabled = (req, res) => {
         }
     });
 }
-async function getCategoryDisabled(res,status =200){
-    Category.find({ isDisabled: { $ne: false } }).exec((error, users) => {
+async function getCategoryDisabled(res, status = 200) {
+    Category.find({isDisabled: true}).sort({createdAt: -1}).exec((error, categories) => {
         if (error) {
-          return res.status(400).json({ error });
-        }
-        if (users) {
-          return res.status(200).json({ users });
+            return res.status(400).json({error});
         } else {
-          return res.status(400).json({ error: "something went wrong" });
+            const categoriesList = createCategories(categories);
+            return res.status(200).json({categories: categoriesList});
         }
-      });
+    });
 }
 
-exports.getCategoriesDisabled = async (req, res) ={
+exports.getCategoriesDisabled = (req, res) => {
     getCategoryDisabled(res);
-}
+};
+
+
