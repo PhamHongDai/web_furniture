@@ -77,8 +77,8 @@ exports.getOrder = (req, res) => {
 
 exports.updateStatus = (req, res) => {
     const {_id, type, paymentStatus} = req.body;
-    if((paymentStatus !== undefined || paymentStatus !== "")
-         && (type !== undefined ||type !=="")) {
+    if ((paymentStatus !== undefined || paymentStatus !== "")
+        && (type !== undefined || type !== "")) {
         Order.findOneAndUpdate(
             {_id: _id, "orderStatus.type": type,},
             {
@@ -91,12 +91,12 @@ exports.updateStatus = (req, res) => {
         ).exec((error, order) => {
             if (error) return res.status(400).json({error});
             if (order) {
-                return res.status(202).json({order});
+                getallOrder(res,202)
             } else {
                 res.status(400).json({error: "something went wrong"});
             }
         })
-    }else {
+    } else {
         Order.findOneAndUpdate(
             {_id: _id, "orderStatus.type": type,},
             {
@@ -108,7 +108,7 @@ exports.updateStatus = (req, res) => {
         ).exec((error, order) => {
             if (error) return res.status(400).json({error});
             if (order) {
-                return res.status(202).json({order});
+                getallOrder(res,202)
             } else {
                 res.status(400).json({error: "something went wrong"});
             }
@@ -116,7 +116,7 @@ exports.updateStatus = (req, res) => {
     }
 }
 
-exports.getAllOrders = async (req, res) => {
+async function getallOrder(res, status = 200) {
     try {
         const orders = await Order.find({paymentStatus: {$ne: "cancelled"}})
             .populate("items.product")
@@ -127,6 +127,10 @@ exports.getAllOrders = async (req, res) => {
     } catch (error) {
         res.status(400).json({error});
     }
+}
+
+exports.getAllOrders = async (req, res) => {
+    getallOrder(res,200)
 }
 
 exports.getOrdersByUser = (req, res) => {
