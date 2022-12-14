@@ -53,7 +53,7 @@ const Users = () => {
           <h4>
             Danh sách người dùng
           </h4>
-          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Người dùng bị khóa</motion.button>
+          {/* <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Người dùng bị khóa</motion.button> */}
         </div>
         <Table striped>
         <thead>
@@ -63,7 +63,7 @@ const Users = () => {
             <th>Ảnh đại diện</th>
             <th>Quyền</th>
             <th>Email</th>
-            <th>Hành động</th>
+            {/* <th>Hành động</th> */}
           </tr>
         </thead>
         <tbody>
@@ -76,9 +76,9 @@ const Users = () => {
               <td><img src={item.profilePicture} alt='avatar'/></td>
               <td>{item.role}</td>
               <td>{item.email}</td>
-              <td>
+              {/* <td>
                 <i className="ri-delete-bin-line"></i>
-              </td>
+              </td> */}
             </tr>
           ))
         }

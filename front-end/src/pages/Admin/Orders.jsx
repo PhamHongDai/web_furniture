@@ -106,7 +106,7 @@ const Orders = () => {
           <h4>
             Danh sách đơn hàng
           </h4>
-          <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Thêm đơn hàng</motion.button>
+          {/* <motion.button whileHover={{ scale: 1.2 }} className="buy__btn">Thêm đơn hàng</motion.button> */}
         </div>
         <InfoOrderDialog
         show={show}

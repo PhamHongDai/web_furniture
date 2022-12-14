@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import AddProductDialog from "../../components/UI/AddProductDialog";
-import { addProduct, deleteProductById, getProductDisable, getProducts, updateProduct } from "../../slices/productSlice";
+import { addProduct, setDisableProduct, getProductsDisable, getProducts, updateProduct } from "../../slices/productSlice";
 import { toast } from "react-toastify";
 
 const Container = styled.div`
@@ -113,15 +113,16 @@ const Products = () => {
     form.append("description", productInfo.description);
     form.append("category", productInfo.category);
     form.append("discountPercent", productInfo.discountPercent);
-    for(let i = 0; i < variantName.length; i++) {
-        form.append(`variant[]` , variantName[i]);
-        form.append(`variant[]`, variantQuantity[i]);
+    for(let i = 0; i < variants.length; i++) {
+        form.append(`variant[]` , variants[i].name);
+        form.append(`variant[]`, variants[i].quantity);
     }
     for (let pic of productInfo.productPictureToChange) {
       form.append("productPicture", pic);
     }
     try {
       const res = await dispatch(addProduct(form));
+      setVariants([]);
       if (res.payload.status === 200) {
         toast.info("Thêm Thành Công !");
       }
@@ -147,7 +148,6 @@ const Products = () => {
         form.append("productPicture", pic);
       }
     }
-    console.log(productInfo);
     try {
       const res = await dispatch(updateProduct(form));
       if (res.payload.status === 200) {
@@ -159,9 +159,10 @@ const Products = () => {
   }
 
   const handleDeleteProduct = async (id) => {
-    const response = await dispatch(deleteProductById({ productId: id })).unwrap();
+    const response = await dispatch(setDisableProduct({"_id": id}));
+    console.log(response);
     if(response.status === 202){
-      toast.warning('Xóa Thành Công');
+      toast.warning('Khóa Thành Công');
     }
   }
 
@@ -202,11 +203,11 @@ const Products = () => {
       variants.push({name: variantName[index], quantity: variantQuantity[index]})
     })
   };
-
+ 
   const handleIsDisabledBtn = async() => {
     if(!isDisable){
       setIsDisable((prev) => !prev);
-      const response = await dispatch(getProductDisable());
+      const response = await dispatch(getProductsDisable());
       if(response.payload.status === 200){
         toast.info('Danh sách sản phẩm bị khóa');
       }

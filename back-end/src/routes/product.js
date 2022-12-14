@@ -36,7 +36,7 @@ router.post(
   adminMiddleware, setDisableProduct
 );
 router.post("/getProducts", getProducts);
-router.post("/getProductDisable", getProductsDisable);
+router.post("/getProductsDisable", getProductsDisable);
 
 router.post("/update", requireSignin, adminMiddleware, uploadCloud.array("productPicture"), updateProduct);
 router.post("/updateVariants", requireSignin, adminMiddleware, updateVariants);

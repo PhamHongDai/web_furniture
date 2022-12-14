@@ -5,8 +5,8 @@ const productApi = {
         const url = "/product/getProducts";
         return axios.post(url);
     },
-    getProductDisable: () => {
-        const url = "/product/getProductDisable";
+    getProductsDisable: () => {
+        const url = "/product/getProductsDisable";
         return axios.post(url);
     },
     getProductBySlug: (slug) => {
@@ -21,8 +21,8 @@ const productApi = {
         const url = "/product/addProductReview";
         return axios.post(url, review);
     },
-    deleteProductById: (productId) => {
-        const url = "/product/deleteProductById";
+    setDisableProduct: (productId) => {
+        const url = "/product/setDisableProduct";
         return axios.post(url, productId)
     },
     updateProduct: (product) => {

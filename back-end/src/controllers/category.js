@@ -65,7 +65,7 @@ exports.setDisableCategory = async (req, res) => {
     try {
         const category = await Category.findOneAndUpdate({_id}, {isDisabled: true});
         if (category) {
-            const product = await Product.updateMany({ "category" : _id },{"$set":{"isDisabled": true}})
+            await Product.updateMany({ "category" : _id },{"$set":{"isDisabled": true}})
             getCategory(res);
         } else {
             res.status(400).json({error: "no found product"});

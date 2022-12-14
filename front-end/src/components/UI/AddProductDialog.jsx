@@ -31,7 +31,7 @@ const AddProductDialog = ({
   const handleVariantAdd = () => {
     setVariantName([...variantName, ""]);
     setVariantQuantity([...variantQuantity, ""]);
-    setVariants([...variants, {name: "", quantity: 0}]);
+    setVariants([...variants, { name: "", quantity: 0 }]);
   }
   const handleVariantRemove = (index) => {
     const list1 = [...variantName];
@@ -47,11 +47,9 @@ const AddProductDialog = ({
 
   const handleVariantNameChange = (e, index) => {
     variants[index].name = e.target.value;
-    console.log(variants)
   }
   const handleVariantQuantityChange = (e, index) => {
     variants[index].quantity = e.target.value;
-    console.log(variants)
   }
 
 
@@ -68,19 +66,24 @@ const AddProductDialog = ({
       toast.error("Vui lòng nhập phần trăm giảm giá hợp lệ")
     } else if (productInfo.productPictureToChange.length === 0 && formMode === true) {
       toast.error("Vui lòng chọn ảnh sản phẩm")
-    } else if (variantName || variantQuantity) {
-      for (let i = 0; i < variantName.length; i++) {
-        if (variantName[i] === "" || parseInt(variantQuantity[i]) < 0) {
+    } else if (variants != null) {
+      for (let i = 0; i < variants.length; i++) {
+        if (variants[i].name === "" || parseInt(variants[i].quantity) <= 0) {
           toast.error("Vui lòng nhập tên loại sản phẩm và số lượng thứ " + i + " hợp lệ")
         }
-      }
-      if (formMode) {
-        await handleAddProduct();
-        setShow((prev) => !prev);
-      } else {
-        await handleUpdateProduct();
-        setShow((prev) => !prev);
-        setVariants([]);
+        else {
+          if (formMode) {
+            await handleAddProduct();
+            setShow((prev) => !prev);
+            setVariants([]);
+            break;
+          } else {
+            await handleUpdateProduct();
+            setShow((prev) => !prev);
+            setVariants([]);
+            break;
+          }
+        }
       }
     }
   }
@@ -183,35 +186,35 @@ const AddProductDialog = ({
                     style={variants.length < 3 ? {} : { display: "none" }}>Thêm</Button>
                 </div>
                 <Row>
-                {(
-                  variants.map((item, index) => (
-                    <>
-                      <Col xs={12} md={5}>
-                        <Form.Group className="mb-3">
-                          <Form.Control type="text" placeholder="Tên loại"
-                            name="name"
-                            defaultValue={item.name}
-                            onChange={(e) => handleVariantNameChange(e, index)} />
-                        </Form.Group>
-                      </Col>
-                      <Col xs={12} md={5}>
-                        <Form.Group className="mb-3">
-                          <Form.Control type="text" placeholder="Số lượng"
-                            name="quantity"
-                            defaultValue={item.quantity}
-                            onChange={(e) => handleVariantQuantityChange(e, index)} />
-                        </Form.Group>
-                      </Col>
-                      <Col xs={12} md={2} style={{ paddingTop: "5px" }}>
-                        <Form.Group className="mb-3">
-                          <i className="ri-delete-bin-line"
-                            onClick={() => handleVariantRemove(index)}
-                            style={variants.length > 1 ? {} : { display: "none" }} />
-                        </Form.Group>
-                      </Col>
+                  {(
+                    variants.map((item, index) => (
+                      <>
+                        <Col xs={12} md={5}>
+                          <Form.Group className="mb-3">
+                            <Form.Control type="text" placeholder="Tên loại"
+                              name="name"
+                              defaultValue={item.name}
+                              onChange={(e) => handleVariantNameChange(e, index)} />
+                          </Form.Group>
+                        </Col>
+                        <Col xs={12} md={5}>
+                          <Form.Group className="mb-3">
+                            <Form.Control type="text" placeholder="Số lượng"
+                              name="quantity"
+                              defaultValue={item.quantity}
+                              onChange={(e) => handleVariantQuantityChange(e, index)} />
+                          </Form.Group>
+                        </Col>
+                        <Col xs={12} md={2} style={{ paddingTop: "5px" }}>
+                          <Form.Group className="mb-3">
+                            <i className="ri-delete-bin-line"
+                              onClick={() => handleVariantRemove(index)}
+                              style={variants.length > 1 ? {} : { display: "none" }} />
+                          </Form.Group>
+                        </Col>
                       </>
-                  ))) 
-                }
+                    )))
+                  }
                 </Row>
               </Col>
             </Row>

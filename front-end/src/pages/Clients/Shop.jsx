@@ -72,6 +72,7 @@ const Shop = () => {
       })
     }
   }
+  
 
   const convert_vi_to_en = (str) => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -101,6 +102,7 @@ const Shop = () => {
     })
     setProductData(searchProducts)
   }
+
   useEffect(() => {
     if(products)
     {
@@ -131,13 +133,13 @@ const Shop = () => {
               </div>
 
               <div className="y">
-                <div className="filter__widget">
-                    <select>
-                      <option>Sắp xếp theo</option>
+                {/* <div className="filter__widget">
+                    <select onChange={handlePrice}>
+                      <option value="default">Sắp xếp theo</option>
                       <option value="ascending">Tăng dần</option>
                       <option value="desceding">Giảm dần</option>
                     </select>
-                  </div>
+                  </div> */}
               </div>
 
               <div className="y">

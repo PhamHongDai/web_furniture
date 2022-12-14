@@ -4,6 +4,7 @@ const slugify = require("slugify");
 
 exports.addProduct = (req, res) => {
     const {name, price, description, category, discountPercent, variant} = req.body;
+    console.log(req.body);
     let variants = [];
     for (let i = 0; i < variant.length; i += 2) {
         variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
@@ -155,13 +156,8 @@ exports.getProductDetailsBySlug = (req, res) => {
 exports.setDisableProduct = async (req, res) => {
     const {_id} = req.body;
     try {
-
-        const product = await Product.findOneAndUpdate({_id}, {isDisabled: true});
-        if (product) {
-            res.status(200).json({message: "Disabled successfully"});
-        } else {
-            res.status(400).json({error: "no found product"});
-        }
+        const products = await Product.findOneAndUpdate({_id}, {isDisabled: true});
+        getProduct(res);
     } catch (error) {
         res.status(400).json({error});
     }
@@ -192,11 +188,11 @@ async function getProduct(res, status = 200) {
     }
 }
 async function getProductDisable(res,status = 200) {
-    Product.find({isDisabled: {$ne: false}}).exec((error, product) => {
+    Product.find({isDisabled: {$ne: false}}).exec((error, products) => {
         if (error) {
             return res.status(400).json({error});
         } else {
-            return res.status(200).json({product});
+            return res.status(200).json({products});
         }
     });
 }
