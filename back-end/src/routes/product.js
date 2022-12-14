@@ -6,7 +6,7 @@ const {
   setDisableProduct,
   getProducts,
   updateProduct,
-  getProductDisalbe,
+  getProductsDisable,
   updateVariants,
   searchByProductName,
   getListProductByIds,
@@ -36,7 +36,7 @@ router.post(
   adminMiddleware, setDisableProduct
 );
 router.post("/getProducts", getProducts);
-router.post("/getProductDisalbe", getProductDisalbe);
+router.post("/getProductDisable", getProductsDisable);
 
 router.post("/update", requireSignin, adminMiddleware, updateProduct);
 router.post("/updateVariants", requireSignin, adminMiddleware, updateVariants);

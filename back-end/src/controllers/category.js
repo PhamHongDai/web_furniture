@@ -102,7 +102,20 @@ exports.getCategoryDisabled = (req, res) => {
             return res.status(200).json({categories: categoriesList});
         }
     });
-  };
+}
+async function getCategoryDisabled(res,status =200){
+    Category.find({ isDisabled: { $ne: false } }).exec((error, users) => {
+        if (error) {
+          return res.status(400).json({ error });
+        }
+        if (users) {
+          return res.status(200).json({ users });
+        } else {
+          return res.status(400).json({ error: "something went wrong" });
+        }
+      });
+}
 
-
-  
+exports.getCategoriesDisabled = async (req, res) ={
+    getCategoryDisabled(res);
+}

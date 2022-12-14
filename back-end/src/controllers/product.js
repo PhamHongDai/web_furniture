@@ -107,6 +107,21 @@ exports.updateProduct = async (req, res) => {
         category,
         discountPercent,
     };
+<<<<<<< HEAD
+    
+    if (req.file) {
+        let productPictures = [];
+        productPictures = req.files.map((file) => {
+            return file.path;
+        });
+    }
+    if (req.variant) {
+        let variants = [];
+        for (let i = 0; i < variant.length; i += 2) {
+        variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
+        }
+        product.variant = variants
+=======
     // if (req.files.length > 0) {
     //     let productPictures = [];
     //     productPictures = req.files.map((file) => {
@@ -120,6 +135,7 @@ exports.updateProduct = async (req, res) => {
         // variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
         // }
         product.variants = variants;
+>>>>>>> 9ae0858bbcb0f87e7310be1c3993b84850775e09
     }
     Product.findOneAndUpdate({_id}, product, {
             new: true, upsert: true
@@ -199,15 +215,17 @@ async function getProduct(res, status = 200) {
         res.status(400).json({error});
     }
 }
-exports.getProductDisalbe=(res, req) => {
-    Product.find({isDisabled: true}).exec((error, categories) => {
+async function getProductDisable(res,status = 200) {
+    Product.find({isDisabled: {$ne: false}}).exec((error, product) => {
         if (error) {
             return res.status(400).json({error});
         } else {
-            const categoriesList = createCategories(categories);
-            return res.status(200).json({categories: categoriesList});
+            return res.status(200).json({product});
         }
     });
+}
+exports.getProductsDisable= async(req, res) => {
+  getProductDisable(res);
 }
 
 exports.getProducts = async (req, res) => {

@@ -76,7 +76,7 @@ exports.getOrder = (req, res) => {
 };
 
 exports.updateStatus = (req, res) => {
-  const { orderId, type } = req.body;
+  const { orderId, type , paymentStatus} = req.body;
   if (req.user.role === "admin") {
     Order.findOneAndUpdate(
       { _id: orderId, "orderStatus.type": type },
@@ -94,10 +94,9 @@ exports.updateStatus = (req, res) => {
         res.status(400).json({ error: "something went wrong" });
       }
     });
-  } else {
     Order.findOneAndUpdate(
       { _id: orderId },
-      { paymentStatus: type },
+      { paymentStatus: paymentStatus },
       { new: true, upsert: true }
     ).exec((error, order) => {
       if (error) return res.status(400).json({ error });
@@ -108,7 +107,7 @@ exports.updateStatus = (req, res) => {
       }
     });
   }
-};
+  };
 
 exports.getAllOrders = async (req, res) => {
   try {
