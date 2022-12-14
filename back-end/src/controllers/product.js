@@ -96,29 +96,23 @@ exports.getProductsByCategorySlug = (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
-    const {_id, name, price, description, category, discountPercent, variants} = req.body;
-    console.log(req.body);
-
+    const {_id, name, price, description, category, discountPercent, variant} = req.body;
+    let variants = [];
+    for (let i = 0; i < variant.length; i += 2) {
+        variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
+    }
+    // if (req.file.length > 0) {
+    //     product.productPicture = req.files.map((file) => {
+    //         return file.path;
+    //     }); 
     const product = {
         name: name,
         price,
         description,
         category,
         discountPercent,
+        variants
     };
-    if (req.file) {
-        let productPictures = [];
-        productPictures = req.files.map((file) => {
-            return file.path;
-        });
-    }
-    if (req.variant) {
-        let variants = [];
-        for (let i = 0; i < variant.length; i += 2) {
-            variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
-        }
-        product.variant = variants
-    }
     Product.findOneAndUpdate({_id}, product, {
             new: true, upsert: true
         }

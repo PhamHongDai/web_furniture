@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import AddProductDialog from "../../components/UI/AddProductDialog";
-import { addProduct, deleteProductById, getProductDisalbe, getProducts, updateProduct } from "../../slices/productSlice";
+import { addProduct, deleteProductById, getProductDisable, getProducts, updateProduct } from "../../slices/productSlice";
 import { toast } from "react-toastify";
 
 const Container = styled.div`
@@ -66,7 +66,10 @@ const Products = () => {
     productPictures: [],
     productPictureToChange: []
   });
-  const [variant, setVariant] = useState([{ name: "", quantity: 0}]);
+  const [variantName, setVariantName] = useState([]);
+  const [variantQuantity, setVariantQuantity] = useState([]);
+
+  const [variants, setVariants] =  useState([]);
 
   const handleName = (event) => {
     setProductInfo({ ...productInfo, name: event.target.value });
@@ -87,10 +90,7 @@ const Products = () => {
   const handleDiscountPercent = (event) => {
     setProductInfo({ ...productInfo, discountPercent: event.target.value });
   };
-  
-  const handleVariants = (a) => {
-    setProductInfo({ ...productInfo, variants: a});
-  };
+
 
   const handleProductPicture = (event) => {
     const reader = new FileReader();
@@ -98,8 +98,8 @@ const Products = () => {
       if (reader.readyState === 2) {
         setProductInfo({
           ...productInfo,
-          productPictures: [...productInfo.productPictures, reader.result],
-          productPictureToChange: [...productInfo.productPictureToChange, event.target.files[0]],
+          productPictures: [reader.result],
+          productPictureToChange: [event.target.files[0]],
         });
       } else return;
     };
@@ -113,9 +113,9 @@ const Products = () => {
     form.append("description", productInfo.description);
     form.append("category", productInfo.category);
     form.append("discountPercent", productInfo.discountPercent);
-    for(let i = 0; i < variant.length; i++) {
-        form.append(`variant[]` , variant[i].name);
-        form.append(`variant[]`, variant[i].quantity);
+    for(let i = 0; i < variantName.length; i++) {
+        form.append(`variant[]` , variantName[i]);
+        form.append(`variant[]`, variantQuantity[i]);
     }
     for (let pic of productInfo.productPictureToChange) {
       form.append("productPicture", pic);
@@ -138,25 +138,18 @@ const Products = () => {
     form.append("description", productInfo.description);
     form.append("category", productInfo.category);
     form.append("discountPercent", productInfo.discountPercent);
-    for(let i = 0; i < variant.length; i++) {
-        form.append(`variant[]` , variant[i].name);
-        form.append(`variant[]`, variant[i].quantity);
+    for(let i = 0; i < variants.length; i++) {
+        form.append(`variant[]` , variants[i].name);
+        form.append(`variant[]`, variants[i].quantity);
     }
-    for (let pic of productInfo.productPictureToChange) {
-      form.append("productPicture", pic);
+    if(productInfo.productPictureToChange){
+      for (let pic of productInfo.productPictureToChange) {
+        form.append("productPicture", pic);
+      }
     }
     console.log(productInfo);
     try {
-      const res = await dispatch(updateProduct({
-        _id: productInfo._id,
-        name: productInfo.name,
-        price: productInfo.price,
-        description: productInfo.description,
-        category: productInfo.category,
-        discountPercent: productInfo.discountPercent,
-        variants: variant,
-        productPicture: productInfo.productPictureToChange
-      }));
+      const res = await dispatch(updateProduct(form));
       if (res.payload.status === 200) {
         toast.info("Sửa Thành Công !");
       }
@@ -184,13 +177,15 @@ const Products = () => {
       productPictures: [],
       productPictureToChange: []
     });
-    setVariant([{ name: "", quantity: 0}]);
+    setVariantName([]);
+    setVariantQuantity([]);
   }
 
-  const handleEditBtn = (item) => {
+  const handleEditBtn = async(item) => {
     setShow((prev) => !prev);
     setFormMode(false);
-    console.log(item);
+    setVariantName([]);
+    setVariantQuantity([]);
     setProductInfo({
       _id: item._id,
       name: item.name,
@@ -201,13 +196,17 @@ const Products = () => {
       productPictures: item.productPictures,
       productPictureToChange: []
     });
-    setVariant(item.variants);
+    item.variants.map((it,index) => {
+      variantName.push(it.name);
+      variantQuantity.push(it.quantity);
+      variants.push({name: variantName[index], quantity: variantQuantity[index]})
+    })
   };
 
   const handleIsDisabledBtn = async() => {
     if(!isDisable){
       setIsDisable((prev) => !prev);
-      const response = await dispatch(getProductDisalbe());
+      const response = await dispatch(getProductDisable());
       if(response.payload.status === 200){
         toast.info('Danh sách sản phẩm bị khóa');
       }
@@ -229,7 +228,7 @@ const Products = () => {
             Danh sách sản phẩm
           </h4>
           <Col style={{textAlign: "right"}}>
-            <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={handleIsDisabledBtn}>Sản phẩm bị khóa</motion.button>
+            <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={handleIsDisabledBtn}>{!isDisable ? "Sản phẩm bị khóa" : "Danh sách sản phẩm" }</motion.button>
             <> </>
             <motion.button whileHover={{ scale: 1.2 }} className="buy__btn" onClick={() => handleAddBtn()}>Thêm sản phẩm</motion.button>
           </Col>
@@ -239,14 +238,17 @@ const Products = () => {
           setShow={setShow}
           formMode={formMode}
           productInfo={productInfo}
-          variant={variant}
-          setVariant={setVariant}
+          variants={variants}
+          variantName={variantName}
+          variantQuantity={variantQuantity}
+          setVariants={setVariants}
+          setVariantName={setVariantName}
+          setVariantQuantity={setVariantQuantity}
           handleName={handleName}
           handlePrice={handlePrice}
           handleDescription={handleDescription}
           handleCategory={handleCategory}
           handleDiscountPercent={handleDiscountPercent}
-          handleVariants={handleVariants}
           handleProductPicture={handleProductPicture}
           handleAddProduct={handleAddProduct}
           handleUpdateProduct={handleUpdateProduct}

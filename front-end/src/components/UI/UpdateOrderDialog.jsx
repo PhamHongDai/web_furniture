@@ -6,6 +6,8 @@ import Table from 'react-bootstrap/Table';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { getAllOrders, updateStatus } from '../../slices/orderSlice';
 
 const UpdateOrderDialog = ({
   showe,
@@ -14,14 +16,20 @@ const UpdateOrderDialog = ({
   handleOrderStatus,
   handlePaymentStatus,
 }) => {
-  
+  const dispatch = useDispatch();
   const handleSubmit = async() => {
     if(orderInfo.paymentStatus.length === 0 ){
       toast.error("Vui lòng chọn trạng thái thanh toán")
     } else if (orderInfo.orderStatus.length === 0 ) {
       toast.error("Vui lòng chọn trạng thái đơn hàng")
     } else {
-      // await handleUpdateStatus();
+      const info = {
+        _id: orderInfo._id,
+        type: orderInfo.orderStatus,
+        paymentStatus: orderInfo.paymentStatus
+      }
+      const res = await dispatch(updateStatus(info));
+      await dispatch(getAllOrders());
       setShowe((prev) => !prev);
     }
   }

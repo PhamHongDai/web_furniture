@@ -60,13 +60,13 @@ const AddCategotyDialog = ({
                   <Form.Label>Hình Ảnh</Form.Label>
                   <Form.Group className="mb-3">
                     <Form.Control
-                      type="file" accept=".jpg,.jpeg,.png"
+                      type="file" accept=".jpg,.jpeg,.png,.webp"
                       onChange={handleCategoryImage} />
                   </Form.Group>
                 </Col>
                 <Col xs={12} md={3} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   {
-                    formMode ? ("") : (
+                    formMode ? ("") : categoryInfo.isDisable ? (
                       <Form.Control
                         style={{ width: "150px" }}
                         as="select" className="text-center"
@@ -77,7 +77,7 @@ const AddCategotyDialog = ({
                         <option value="true">Khóa</option>
                         <option value="false">Sẵn sàng</option>
                       </Form.Control>
-                    )
+                    ) : ("")
                   }
                 </Col>
                 <Col xs={12} md={2}>

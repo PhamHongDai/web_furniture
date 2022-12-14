@@ -107,7 +107,11 @@ const Catagories = () => {
     form.append("categoryImage", categoryInfo.categoryImageToChange);
     try {
       const res = await dispatch(updateCategories(form));
-      
+      if(isDisable){
+        await dispatch(getCategoryDisabled());
+      } else {
+        await dispatch(getCategories());
+      }
       if (res.payload.status === 200) {
         toast.warn("Sửa Thành Công !");
       }
@@ -139,7 +143,7 @@ const Catagories = () => {
   }
   const handleSetDisableBtn = async(id) => {
     const response = await dispatch(setDisableCategories({ _id: id }));
-    if(response.status === 200){
+    if(response.payload.status === 200){
       toast.warning('Khóa Thành Công');
     }
   }
@@ -196,7 +200,7 @@ const Catagories = () => {
           </tr>
         </thead>
         <tbody>
-        {
+        {categories.length > 0 ? (
           categories.map((item, index) => 
           (
             <tr key={index}>
@@ -206,10 +210,17 @@ const Catagories = () => {
               <td>
                 <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
                 <> </>
-                <i className="ri-delete-bin-line" onClick={() => handleSetDisableBtn(item._id)}></i>
+                {
+                  isDisable ? (" ") : (
+                    <i className="ri-delete-bin-line" onClick={() => handleSetDisableBtn(item._id)}></i>
+                  )
+                }
               </td>
             </tr>
           ))
+        ) : (
+          <tr></tr>
+        )
         }
         </tbody>
       </Table>

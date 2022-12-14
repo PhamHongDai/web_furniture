@@ -51,11 +51,13 @@ const Orders = () => {
   const [show, setShow] = useState(false);
   const [showe, setShowe] = useState(false);
   const [orderInfo, setOrderInfo] = useState({
+    _id: "",
     items: [],
     orderStatus: '',
     paymentStatus: '',
     orderStatusL: [],
   });
+
   const handleOrderStatus = (e) => {
     setOrderInfo({...orderInfo, orderStatus: e.target.value});
   }
@@ -86,12 +88,15 @@ const Orders = () => {
         status = index;
       }})
     setOrderInfo({
+      _id: item._id,
       items: item.items,
       paymentStatus: item.paymentStatus,
       orderStatus: item.orderStatus[status].type,
       orderStatusL: item.orderStatus
     });
   };
+
+  
 
   return (
     <Container>

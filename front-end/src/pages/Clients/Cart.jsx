@@ -158,13 +158,20 @@ const Cart = () => {
   const handleSelectedAll = (e) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      setSelected(cartItems);
+      const selectCartItem = cartItems.filter(item => {
+        return item.product.isDisabled === false 
+      })
+      setSelected(selectCartItem);
     } else {
       setSelected([]);
     }
   };
 
-  const isSelectedAll = cartItems.length === selected.length;
+  const selectCartItem = cartItems.filter(item => {
+    return item.product.isDisabled === false 
+  })
+  const isSelectedAll = (selectCartItem.length === selected.length && selected.length !== 0)
+
 
   const totalPrice = selected.reduce((total, priceItem) => {
     total +=
@@ -266,9 +273,10 @@ const Cart = () => {
                                         type="checkbox"
                                         checked={itemSelected(item) ? true : false}
                                         onChange={(e) => handleSelected(e, item)}
+                                        disabled={item.product.isDisabled ? ("checked") : "" }
                                       /></td>
                                       <td><img src={item.product.productPictures[0]} alt=''></img></td>
-                                      <td><Link to={`/shop/${item.product.slug}`}>{item.product.name}</Link></td>
+                                      <td><Link to={item.product.isDisabled ? ("") : (`/shop/${item.product.slug}`)}>{item.product.name}</Link></td>
                                       <td>{item.product.variants?.[variantIndex].name}</td>
                                       <td>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -277,7 +285,7 @@ const Cart = () => {
                                         </div>
                                       </td>
                                       <td >
-                                        <i className="ri-checkbox-indeterminate-line" onClick={() =>
+                                        <i className="ri-checkbox-indeterminate-line"  onClick={item.product.isDisabled ? ("") :(() =>
                                           handleDecrement(
                                             {
                                               product: item.product._id,
@@ -285,10 +293,10 @@ const Cart = () => {
                                               quantity: item.quantity - 1,
                                             },
                                             item.product.name
-                                          )
+                                          ))
                                         }></i>
-                                        <input defaultValue={item.quantity} type="button"></input>
-                                        <i className="ri-add-box-line" onClick={() =>
+                                        <input defaultValue={item.quantity} type="button" ></input>
+                                        <i className="ri-add-box-line" onClick={ item.product.isDisabled ? ("") : (() =>
                                           handleIncrement(
                                             {
                                               product: item.product._id,
@@ -297,7 +305,7 @@ const Cart = () => {
                                             },
                                             index,
                                             variantIndex
-                                          )
+                                          ))
                                         }></i>
                                       </td>
                                       <td>{Number((item.product.price - (item.product?.discountPercent / 100) * item.product.price) * item.quantity).toLocaleString("vi")}₫</td>

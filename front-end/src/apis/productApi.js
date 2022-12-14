@@ -5,8 +5,8 @@ const productApi = {
         const url = "/product/getProducts";
         return axios.post(url);
     },
-    getProductDisalbe: () => {
-        const url = "/product/getProductDisalbe";
+    getProductDisable: () => {
+        const url = "/product/getProductDisable";
         return axios.post(url);
     },
     getProductBySlug: (slug) => {

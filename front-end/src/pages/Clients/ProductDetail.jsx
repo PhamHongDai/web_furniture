@@ -260,7 +260,7 @@ const ProductDetail = () => {
             <div className="y">
               <div className="product__details">
                 <h2>{product.name}</h2>
-                <div className="product__rating">
+                {/* <div className="product__rating">
                   <div className="product__price">
                     <span><i className="ri-star-s-fill"></i></span>
                     <span><i className="ri-star-s-fill"></i></span>
@@ -270,14 +270,14 @@ const ProductDetail = () => {
                   </div>
                   <p>
                     (<span>{rating}</span> ratings)</p>
-                </div>
+                </div> */}
                 <div className="product__price">
                   <span className="price">{Number(product.price).toLocaleString("vi")}₫</span>
                   <span className="price__end">{Number(Math.ceil((product.price * (100 - product.discountPercent)) / 100)).toLocaleString("vi")}₫</span>
                 </div>
                 <div className="more__info">
                   <p>Phân loại: {product.category.name}</p>
-                    <p>Kiểu dáng:</p>
+                    <p>Loại:</p>
                   <div>
                     {
                       product.variants?.map((item, index) => (

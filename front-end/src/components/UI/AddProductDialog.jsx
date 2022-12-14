@@ -12,8 +12,12 @@ const AddProductDialog = ({
   setShow,
   formMode,
   productInfo,
-  variant,
-  setVariant,
+  variants,
+  variantName,
+  variantQuantity,
+  setVariants,
+  setVariantName,
+  setVariantQuantity,
   handleName,
   handlePrice,
   handleDescription,
@@ -25,28 +29,31 @@ const AddProductDialog = ({
 }) => {
   const { categories } = useSelector((state) => state.category);
   const handleVariantAdd = () => {
-    setVariant([...variant, { name: "", quantity: 0}]);
+    setVariantName([...variantName, ""]);
+    setVariantQuantity([...variantQuantity, ""]);
+    setVariants([...variants, {name: "", quantity: 0}]);
   }
   const handleVariantRemove = (index) => {
-    const list = [...variant];
-    list.splice(index, 1);
-    setVariant(list)
+    const list1 = [...variantName];
+    list1.splice(index, 1);
+    setVariantName(list1)
+    const list2 = [...variantQuantity];
+    list2.splice(index, 1);
+    setVariantQuantity(list2)
+    const list3 = [...variants];
+    list3.splice(index, 1);
+    setVariants(list3)
   }
 
-  const handleVariantChange = (e, key, index) => {
-    if (key === 0) {
-      const { name, value } = e.target;
-      const list = [...variant];
-      list[index][name] = value;
-      setVariant(list);
-    } else if (key === 1) {
-      const { name, value } = e.target;
-      const list = [...variant];
-      list[index][name] = parseInt(value);
-      setVariant(list);
-    }
-    console.log(variant)
+  const handleVariantNameChange = (e, index) => {
+    variants[index].name = e.target.value;
+    console.log(variants)
   }
+  const handleVariantQuantityChange = (e, index) => {
+    variants[index].quantity = e.target.value;
+    console.log(variants)
+  }
+
 
   const handleSubmit = async () => {
     if (productInfo.name.length === 0) {
@@ -61,9 +68,9 @@ const AddProductDialog = ({
       toast.error("Vui lòng nhập phần trăm giảm giá hợp lệ")
     } else if (productInfo.productPictureToChange.length === 0 && formMode === true) {
       toast.error("Vui lòng chọn ảnh sản phẩm")
-    } else if (variant) {
-      for (let i = 1; i <= variant.length; i++) {
-        if (variant[i - 1].name === "" || parseInt(variant[i - 1].quantity) < 0) {
+    } else if (variantName || variantQuantity) {
+      for (let i = 0; i < variantName.length; i++) {
+        if (variantName[i] === "" || parseInt(variantQuantity[i]) < 0) {
           toast.error("Vui lòng nhập tên loại sản phẩm và số lượng thứ " + i + " hợp lệ")
         }
       }
@@ -73,8 +80,14 @@ const AddProductDialog = ({
       } else {
         await handleUpdateProduct();
         setShow((prev) => !prev);
+        setVariants([]);
       }
     }
+  }
+
+  const handleClose = () => {
+    setVariants([]);
+    setShow((prev) => !prev);
   }
   return (
     <>
@@ -154,12 +167,12 @@ const AddProductDialog = ({
                 <Form.Label>Hình Ảnh</Form.Label>
                 <Form.Group className="mb-3">
                   <Form.Control
-                    type="file" accept=".jpg,.jpeg,.png" multiple
+                    type="file" accept=".jpg,.jpeg,.png,.webp" multiple
                     onChange={handleProductPicture} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={2}>
-                <img style={{width: "80px", height: "80px", backgroundColor: "#f8f8f8", objectFit: "cover", borderRadius: "5px"}}
+                <img style={{ width: "80px", height: "80px", backgroundColor: "#f8f8f8", objectFit: "cover", borderRadius: "5px" }}
                   src={productInfo.productPictures[0]} alt=''></img>
               </Col>
               <Col xs={6} md={5}>
@@ -167,73 +180,45 @@ const AddProductDialog = ({
                   <Form.Label>Loại</Form.Label>
                   <Button variant="secondary" size="sm"
                     onClick={handleVariantAdd}
-                    style={variant.length < 3 ? {} : { display: "none" }}>Thêm</Button>
+                    style={variants.length < 3 ? {} : { display: "none" }}>Thêm</Button>
                 </div>
-                {formMode ? (
-                  variant.map((item, index) => (
-                    <Row key={index}>
-                      <Col xs={12} md={5}>
-                        <Form.Group className="mb-3">
-                          <Form.Control type="text" placeholder="Tên loại"
-                            name="name"
-                            value={item.name}
-                            onChange={(e) => handleVariantChange(e, 0, index)} />
-                        </Form.Group>
-                      </Col>
-                      <Col xs={12} md={5}>
-                        <Form.Group className="mb-3">
-                          <Form.Control type="number" placeholder="Số lượng"
-                            name="quantity"
-                            value={item.quantity}
-                            onChange={(e) => handleVariantChange(e, 1, index)} />
-                        </Form.Group>
-                      </Col>
-                      <Col xs={12} md={2} style={{ paddingTop: "5px" }}>
-                        <Form.Group className="mb-3">
-                          <i className="ri-delete-bin-line"
-                            onClick={() => handleVariantRemove(index)}
-                            style={variant.length > 1 ? {} : { display: "none" }} />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                  ))
-                ) : (
-                  variant.map((item, index) => (
-                    <Row key={index}>
+                <Row>
+                {(
+                  variants.map((item, index) => (
+                    <>
                       <Col xs={12} md={5}>
                         <Form.Group className="mb-3">
                           <Form.Control type="text" placeholder="Tên loại"
                             name="name"
                             defaultValue={item.name}
-                            onChange={(e) => handleVariantChange(e, 0, index)} />
+                            onChange={(e) => handleVariantNameChange(e, index)} />
                         </Form.Group>
                       </Col>
                       <Col xs={12} md={5}>
                         <Form.Group className="mb-3">
-                          <Form.Control type="number" placeholder="Số lượng"
+                          <Form.Control type="text" placeholder="Số lượng"
                             name="quantity"
                             defaultValue={item.quantity}
-                            onChange={(e) => handleVariantChange(e, 1, index)} />
+                            onChange={(e) => handleVariantQuantityChange(e, index)} />
                         </Form.Group>
                       </Col>
                       <Col xs={12} md={2} style={{ paddingTop: "5px" }}>
                         <Form.Group className="mb-3">
                           <i className="ri-delete-bin-line"
                             onClick={() => handleVariantRemove(index)}
-                            style={variant.length > 1 ? {} : { display: "none" }} />
+                            style={variants.length > 1 ? {} : { display: "none" }} />
                         </Form.Group>
                       </Col>
-                    </Row>
-                  ))
-                )
-
+                      </>
+                  ))) 
                 }
+                </Row>
               </Col>
             </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShow((prev) => !prev)}>
+          <Button variant="secondary" onClick={handleClose}>
             Đóng
           </Button>
           <Button variant="primary" onClick={handleSubmit}>{formMode ? "Thêm" : "Sửa"}</Button>
