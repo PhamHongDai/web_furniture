@@ -4,7 +4,6 @@ const slugify = require("slugify");
 
 exports.addProduct = (req, res) => {
     const {name, price, description, category, discountPercent, variant} = req.body;
-    console.log(req.body);
     let variants = [];
     for (let i = 0; i < variant.length; i += 2) {
         variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});

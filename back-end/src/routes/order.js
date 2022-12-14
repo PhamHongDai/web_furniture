@@ -14,9 +14,10 @@ const {
 const router = express.Router();
 
 router.post("/add", requireSignin, userMiddleware, addOrder);
+
 router.post("/getOrdersByUser", requireSignin, userMiddleware, getOrdersByUser);
-router.post("/updateStatus",adminMiddleware ,requireSignin, updateStatus);
-router.post("/updatePaymentStatus",adminMiddleware, requireSignin, updateStatus);
+
+router.post("/updateStatus" ,requireSignin,adminMiddleware, updateStatus);
 
 router.post("/getAllOrders", requireSignin, adminMiddleware, getAllOrders);
 

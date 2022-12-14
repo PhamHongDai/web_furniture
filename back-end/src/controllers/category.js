@@ -61,7 +61,7 @@ exports.getCategories = (req, res) => {
 
 exports.setDisableCategory = async (req, res) => {
     const {_id} = req.body;
-    console.log("hello")
+    console.log(_id)
     try {
         const category = await Category.findOneAndUpdate({_id}, {isDisabled: true});
         if (category) {
