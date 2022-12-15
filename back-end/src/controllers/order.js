@@ -104,7 +104,7 @@ exports.updateStatus = (req, res) => {
     ).exec((error,order) => {
         if (error) return res.status(400).json({error});
         if (order && !paymentStatus) {
-            res.status(202).json({order});
+            getallOrder(res, 202);
     }});
     if(paymentStatus){
     Order.findOneAndUpdate(
@@ -114,7 +114,7 @@ exports.updateStatus = (req, res) => {
     ).exec((error, order) => {
         if (error) return res.status(400).json({error});
         if (order) {
-            res.status(202).json({order});
+            getallOrder(res, 202);
         } else {
             res.status(400).json({error: "something went wrong"});
         }
