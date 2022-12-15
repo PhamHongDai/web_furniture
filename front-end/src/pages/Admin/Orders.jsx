@@ -53,6 +53,7 @@ const Orders = () => {
   const [orderInfo, setOrderInfo] = useState({
     _id: "",
     items: [],
+    oldType: "",
     orderStatus: '',
     paymentStatus: '',
     orderStatusL: [],
@@ -90,6 +91,7 @@ const Orders = () => {
     setOrderInfo({
       _id: item._id,
       items: item.items,
+      oldType: item.orderStatus[status].type,
       paymentStatus: item.paymentStatus,
       orderStatus: item.orderStatus[status].type,
       orderStatusL: item.orderStatus

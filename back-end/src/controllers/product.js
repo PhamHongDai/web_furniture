@@ -102,10 +102,6 @@ exports.updateProduct = async (req, res) => {
     for (let i = 0; i < variant.length; i += 2) {
         variants.push({name: variant[i], quantity: parseInt(variant[i + 1])});
     }
-    // if (req.file.length > 0) {
-    //     product.productPicture = req.files.map((file) => {
-    //         return file.path;
-    //     }); 
     const product = {
         name: name,
         price,

@@ -26,6 +26,7 @@ const UpdateOrderDialog = ({
       const info = {
         _id: orderInfo._id,
         type: orderInfo.orderStatus,
+        oldType: orderInfo.oldType,
         paymentStatus: orderInfo.paymentStatus
       }
       const res = await dispatch(updateStatus(info));

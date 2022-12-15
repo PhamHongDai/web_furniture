@@ -143,11 +143,6 @@ const Products = () => {
         form.append(`variant[]` , variants[i].name);
         form.append(`variant[]`, variants[i].quantity);
     }
-    if(productInfo.productPictureToChange){
-      for (let pic of productInfo.productPictureToChange) {
-        form.append("productPicture", pic);
-      }
-    }
     try {
       const res = await dispatch(updateProduct(form));
       if (res.payload.status === 200) {
@@ -287,9 +282,15 @@ const Products = () => {
               <td>{item.discountPercent}%</td>
               <td><img src={item.productPictures[0]} alt=''></img></td>
               <td>
-                <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
-                <> </>
-                <i className="ri-delete-bin-line" onClick={() =>handleDeleteProduct(item._id)}></i>
+                {
+                  isDisable ? ("") : (
+                    <>
+                      <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
+                      <> </>
+                      <i className="ri-delete-bin-line" onClick={() =>handleDeleteProduct(item._id)}></i>
+                    </>
+                  )
+                }
               </td>
             </tr>
           ))

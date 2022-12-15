@@ -171,7 +171,8 @@ const AddProductDialog = ({
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="file" accept=".jpg,.jpeg,.png,.webp" multiple
-                    onChange={handleProductPicture} />
+                    onChange={handleProductPicture} 
+                    disabled={!formMode ? "checked" : ""}/>
                 </Form.Group>
               </Col>
               <Col xs={12} md={2}>

@@ -9,6 +9,7 @@ import ProductList from "../../components/UI/ProductList";
 import { useEffect } from "react";
 import { addToCart } from "../../slices/cartSlice";
 import { toast } from "react-toastify";
+import { addProductReview } from "../../slices/productSlice";
 const Wrapper = styled.section`
   .content{
     padding: 0px 140px;
@@ -177,6 +178,19 @@ const ProductDetail = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { products, loading } = useSelector((state) => state.product)
   const productSelect = products.find(item => item.slug === slug)
+  const [review, setReview] = useState({
+    productId: "",
+    rating: null,
+    comment: "",
+  });
+
+  const handleReviewRating = (index) => {
+    setReview({ ...review, rating: index, productId: productSelect._id })
+  }
+
+  const handleReviewComment = (e) => {
+    setReview({ ...review, comment: e.target.value, productId: productSelect._id })
+  }
 
   const [product, setProduct] = useState({
     _id: 0,
@@ -198,7 +212,7 @@ const ProductDetail = () => {
 
   const handleSelectedVariant = (value, index) => {
     setActive(index);
-    setCartItem({ ...cartItem, product:  productSelect._id, variant: value, quantity: 1 });
+    setCartItem({ ...cartItem, product: productSelect._id, variant: value, quantity: 1 });
   };
 
   const handleAddCart = async () => {
@@ -209,7 +223,7 @@ const ProductDetail = () => {
     } else if (!isAuthenticated) {
       navigate("/signin");
     } else {
-      try{
+      try {
         const res = await dispatch(addToCart({ cartItem: cartItem }));
         toast.success("Đã thêm vào giỏ hàng")
       }
@@ -221,11 +235,14 @@ const ProductDetail = () => {
     }
   };
 
-  let rating = 0
-  product.reviews.forEach(item => {
-    rating += item.rating
-  });
-  rating = Number(rating / product.reviews.length).toFixed(2)
+  const handleSubmit = async () => {
+    const res = await dispatch(addProductReview(review))
+  }
+  // let rating = 0
+  // product.reviews.forEach(item => {
+  //   rating += item.rating
+  // });
+  // rating = Number(rating / product.reviews.length).toFixed(2)
 
   const relatedProducts = products.filter((item) => item.category.name === product.category.name).slice(0, 8)
 
@@ -233,7 +250,7 @@ const ProductDetail = () => {
     if (productSelect) {
       setProduct({
         ...product,
-        _id: productSelect.id,
+        _id: productSelect._id,
         name: productSelect.name,
         price: productSelect.price,
         discountPercent: productSelect.discountPercent,
@@ -277,12 +294,12 @@ const ProductDetail = () => {
                 </div>
                 <div className="more__info">
                   <p>Phân loại: {product.category.name}</p>
-                    <p>Loại:</p>
+                  <p>Loại:</p>
                   <div>
                     {
                       product.variants?.map((item, index) => (
                         <input key={index}
-                          className={active === index ? ("variant__btn active"):("variant__btn")}
+                          className={active === index ? ("variant__btn active") : ("variant__btn")}
                           type="button"
                           value={item.name}
                           required
@@ -346,23 +363,22 @@ const ProductDetail = () => {
             tab === 'rev' ?
               <div className="x" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div className="review__form">
+
                   <h4>Để lại phản hồi của bạn</h4>
                   <form>
-                    <div className="form__group">
-                      <input type="text" placeholder="Tên ..." />
-                    </div>
+
                     <div className="form__group" style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                      <span>1<i className="ri-star-s-fill"></i></span>
-                      <span>2<i className="ri-star-s-fill"></i></span>
-                      <span>3<i className="ri-star-s-fill"></i></span>
-                      <span>4<i className="ri-star-s-fill"></i></span>
-                      <span>5<i className="ri-star-s-fill"></i></span>
+                      <span onClick={() => handleReviewRating(1)}>1<i className="ri-star-s-fill"></i></span>
+                      <span onClick={() => handleReviewRating(2)}>2<i className="ri-star-s-fill"></i></span>
+                      <span onClick={() => handleReviewRating(3)}>3<i className="ri-star-s-fill"></i></span>
+                      <span onClick={() => handleReviewRating(4)}>4<i className="ri-star-s-fill"></i></span>
+                      <span onClick={() => handleReviewRating(5)}>5<i className="ri-star-s-fill"></i></span>
                     </div>
                     <div className="form__group">
-                      <textarea rows="5" type="text" placeholder="Phản hồi ..." />
+                      <textarea onChange={handleReviewComment} rows="5" type="text" placeholder="Phản hồi ..." />
                     </div>
 
-                    <button type="submit" className="buy__btn">Gửi</button>
+                    <button type="submit" className="buy__btn" onClick={handleSubmit}>Gửi</button>
                   </form>
                 </div>
               </div> : <></>
