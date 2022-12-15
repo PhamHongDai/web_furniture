@@ -78,51 +78,48 @@ exports.getOrder = (req, res) => {
 exports.updateStatus = (req, res) => {
     const {_id, type, oldType, paymentStatus} = req.body;
     console.log(_id, type, oldType, paymentStatus)
-    if ((paymentStatus === undefined && paymentStatus === "")
-        && (type !== undefined || type !== "")) {
-        console.log("khong truyen pay")
-        Order.findOneAndUpdate({_id: _id, "orderStatus.type": oldType},
-            {
-                $set: {
-                    "orderStatus.$": [
-                        {type: oldType, date: new Date(), isCompleted: false},
-                    ],
+    Order.findOneAndUpdate({_id: _id, "orderStatus.type": oldType},
+        {
+            $set: {
+                "orderStatus.$": [
+                    {type: oldType, date: new Date(), isCompleted: false},
+                ],
 
-                },
             },
-            {new: true, upsert: true}
-        ).exec((error) => {
-            if (error) return res.status(400).json({error});
-        });
-        Order.findOneAndUpdate({_id: _id, "orderStatus.type": type},
-            {
-                $set: {
-                    "orderStatus.$": [
-                        {type: type, date: new Date(), isCompleted: true},
-                    ],
+        },
+        {new: true, upsert: true}
+    ).exec((error) => {
+        if (error) return res.status(400).json({error});
+    });
+    Order.findOneAndUpdate({_id: _id, "orderStatus.type": type},
+        {
+            $set: {
+                "orderStatus.$": [
+                    {type: type, date: new Date(), isCompleted: true},
+                ],
 
-                },
             },
-            {new: true, upsert: true}
-        ).exec((error) => {
-            if (error) return res.status(400).json({error});
-        });
-    }
-    if ((paymentStatus !== undefined || paymentStatus !== "")){
-        console.log("co truyen pay")
-        Order.findOneAndUpdate(
-                {_id: _id},
-                {paymentStatus: paymentStatus},
-                {new: true, upsert: true}
-            ).exec((error, order) => {
-                if (error) return res.status(400).json({error});
-                if (order) {
-                    res.status(202).json({order});
-                } else {
-                    res.status(400).json({error: "something went wrong"});
-                }
-            });}
-    }
+        },
+        {new: true, upsert: true}
+    ).exec((error,order) => {
+        if (error) return res.status(400).json({error});
+        if (order && !paymentStatus) {
+            res.status(202).json({order});
+    }});
+    if(paymentStatus){
+    Order.findOneAndUpdate(
+        {_id: _id},
+        {paymentStatus: paymentStatus},
+        {new: true, upsert: true}
+    ).exec((error, order) => {
+        if (error) return res.status(400).json({error});
+        if (order) {
+            res.status(202).json({order});
+        } else {
+            res.status(400).json({error: "something went wrong"});
+        }
+    });}
+}
 
 async function getallOrder(res, status = 200) {
     try {
