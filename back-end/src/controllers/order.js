@@ -76,26 +76,27 @@ exports.getOrder = (req, res) => {
 };
 
 exports.updateStatus = (req, res) => {
-    const {_id, type, paymentStatus} = req.body;
+    const {_id, newType,oldType, paymentStatus} = req.body;
     if ((paymentStatus !== undefined || paymentStatus !== "")
-        && (type !== undefined || type !== "")) {
-        Order.findOneAndUpdate(
-            {_id: _id, "orderStatus.type": type,},
+        && (newType !== undefined || newType !== "")) {
+        Order.findOneAndUpdate({ _id: orderId, "orderStatus.type": type },
             {
                 $set: {
-                    "orderStatus.$": [{type, date: new Date(), isCompleted: true}],
-                    "paymentStatus": paymentStatus,
+                    "orderStatus.$": [
+                        { oldType, date: new Date(), isCompleted: false },
+                        { newType, date: new Date(), isCompleted: true },
+                    ],
                 },
             },
-            {new: true, upsert: true}
+            { new: true, upsert: true }
         ).exec((error, order) => {
-            if (error) return res.status(400).json({error});
+            if (error) return res.status(400).json({ error });
             if (order) {
-                getallOrder(res,202)
+                res.status(202).json({ order });
             } else {
-                res.status(400).json({error: "something went wrong"});
+                res.status(400).json({ error: "something went wrong" });
             }
-        })
+        });
     } else {
         Order.findOneAndUpdate(
             {_id: _id, "orderStatus.type": type,},
