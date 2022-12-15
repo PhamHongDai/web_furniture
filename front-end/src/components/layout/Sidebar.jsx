@@ -39,7 +39,7 @@ const Sidebar = () => {
               <CDBSidebarMenuItem icon="table">Danh mục</CDBSidebarMenuItem>
             </NavLink>
             <NavLink to="/orders">
-              <CDBSidebarMenuItem icon="chart-line">Đơn mua</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem icon="chart-line">Đơn hàng</CDBSidebarMenuItem>
             </NavLink>
 
           </CDBSidebarMenu>

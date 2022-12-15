@@ -97,7 +97,7 @@ const Checkout = () => {
   const shippingFee = 30000;
 
   const setDefaultDeliveryInfo = () => {
-    if (deliveryInfo.address) {
+    if (deliveryInfo.address.length !== 0) {
       const defaultAddress = deliveryInfo.address.find(
         (add) => add.isDefault === true
       );
@@ -190,14 +190,7 @@ const Checkout = () => {
               {
                 loading ? (
                   <div className="notifi__block">Loading...</div>
-                ) : !address ? (
-                  <div className="notifi__block">
-                    Vui lòng thêm địa chỉ giao hàng.
-                    <Link to="/delivery">
-                      Tại đây!
-                    </Link>
-                  </div>
-                ) : (
+                ) : (deliveryInfo.address.length !== 0)  ? (
                   <div className="y">
                     <div className="item-x">
                       <label>Họ và Tên:</label>
@@ -221,6 +214,13 @@ const Checkout = () => {
                         </select>
                       </span>
                     </div>
+                  </div>
+                ) :  (
+                  <div className="notifi__block">
+                    Vui lòng thêm địa chỉ giao hàng.
+                    <Link to="/delivery">
+                      Tại đây!
+                    </Link>
                   </div>
                 )
               }

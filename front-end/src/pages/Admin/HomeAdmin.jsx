@@ -80,7 +80,7 @@ const HomeAdmin = () => {
               <Card.Body>
                 <Card.Title>SỐ ĐƠN HÀNG ĐANG ĐÓNG GÓI</Card.Title>
                 <Card.Text>
-                  {order}
+                  {packed}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -90,7 +90,7 @@ const HomeAdmin = () => {
               <Card.Body>
                 <Card.Title>SỐ ĐƠN HÀNG ĐANG VẬN CHUYỂN</Card.Title>
                 <Card.Text>
-                  {order}
+                  {shipped}
                 </Card.Text>
               </Card.Body>
             </Card>
