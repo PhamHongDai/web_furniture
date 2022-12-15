@@ -26,6 +26,10 @@ const authApi = {
     const url = "/user/updateUserInfo";
     return axios.post(url, user);
   },
+  updateForgetPassword: (user) => {
+    const url = "/auth/updateForgetPassword";
+    return axios.post(url, user);
+  }
 };
 
 export default authApi;

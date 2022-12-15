@@ -73,6 +73,17 @@ export const verifyOtp = createAsyncThunk(
     }
   }
 );
+export const updateForgetPassword = createAsyncThunk(
+  "auth/updateForgetPassword",
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await authApi.updateForgetPassword(user);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -125,6 +136,16 @@ export const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload.data.user;
       state.isAuthenticated = true;
+    },
+    [updateForgetPassword.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateForgetPassword.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [updateForgetPassword.fulfilled]: (state, action) => {
+      state.loading = false;
     },
   },
 });
