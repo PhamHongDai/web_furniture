@@ -11,6 +11,7 @@ const {
   searchByProductName,
   getListProductByIds,
   addProductReview,
+  setDisableProductFasle,
 } = require("../controllers/product");
 const {
   requireSignin,
@@ -34,6 +35,10 @@ router.post(
   "/setDisableProduct",
   requireSignin,
   adminMiddleware, setDisableProduct
+);router.post(
+  "/setDisableProductFasle",
+  requireSignin,
+  adminMiddleware, setDisableProductFasle
 );
 router.post("/getProducts", getProducts);
 router.post("/getProductsDisable", getProductsDisable);
