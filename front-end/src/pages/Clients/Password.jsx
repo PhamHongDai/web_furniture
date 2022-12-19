@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { sendOtpToEmail, updateUserInfo } from "../../slices/authSlice";
+import { sendOtpToEmail, updateForgetPassword } from "../../slices/authSlice";
 import { toast } from "react-toastify";
 import Helmet from "../../components/layout/Helmet";
 import CommonSection from "../../components/UI/CommonSection";
+import { useEffect } from "react";
 
 const Container = styled.section`
   .content{
@@ -39,7 +40,7 @@ const Container = styled.section`
     border-radius: 5px;
     padding: 0px 10px;
   }
-  .group__input a{
+  .group__input label{
     cursor: pointer;
     padding: 0px 20px;
     color: coral;
@@ -66,12 +67,11 @@ const Container = styled.section`
 
 const Password = () => {
   const { user, isAuthenticated } = useSelector(state => state.auth)
+  const dispatch = useDispatch();
   const [otp, setOtp] = useState('');
   const [pass, setPass] = useState('');
+  const [email, setEmail] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
-  const dispatch = useDispatch();
-  const email = user.email;
-  const name = user.name;
 
   const handleOTP = async (e) => {
     e.preventDefault();
@@ -87,10 +87,17 @@ const Password = () => {
     if (pass !== confirmPass) {
       toast.error('Mật khẩu không trùng khớp');
     } else {
-      const change = await dispatch(updateUserInfo({ name, pass, otp })).unwrap();
-      console.log(change);
+      const change = await dispatch(updateForgetPassword({ otp, password: pass, email: email}));
+      if(change.payload.status === 202) {
+        toast.info("Đổi mật khẩu thành công!")
+      } else {
+        toast.error("Sai mã OTP!")
+      }
     }
   }
+  useEffect (() => {
+    setEmail(user.email);
+  },[user])
 
   return (
     <Helmet title="Đổi mật khẩu">
@@ -101,7 +108,7 @@ const Password = () => {
             <div className="group__input">
               <span>Xác nhận mã OTP</span>
               <input onChange={(e) => setOtp(e.target.value)} type="text" />
-              <a onClick={handleOTP}>Lấy mã OTP</a>
+              <label onClick={handleOTP}>Lấy mã OTP</label>
             </div>
             <div className="group__input">
               <span>Mật Khẩu Mới</span>

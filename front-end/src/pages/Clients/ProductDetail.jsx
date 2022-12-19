@@ -153,7 +153,7 @@ const Wrapper = styled.section`
   }
   .variant__btn{
     cursor: pointer;
-    width: 100px;
+    width: 30%;
     padding: 10px 0px;
     margin: 30px 20px 30px 0px;
     border-radius: 2px;
@@ -210,9 +210,13 @@ const ProductDetail = () => {
     quantity: 1
   });
 
-  const handleSelectedVariant = (value, index) => {
-    setActive(index);
-    setCartItem({ ...cartItem, product: productSelect._id, variant: value, quantity: 1 });
+  const handleSelectedVariant = (value, index, quantity, name) => {
+    if(quantity <= 0) {
+      toast.warn("Loại " + name + " tạm hết hàng!")
+    } else {
+      setActive(index);
+      setCartItem({ ...cartItem, product: productSelect._id, variant: value, quantity: 1 });
+    }
   };
 
   const handleAddCart = async () => {
@@ -303,8 +307,7 @@ const ProductDetail = () => {
                           type="button"
                           value={item.name}
                           required
-                          disabled={item.quantity === 0 ? true : false}
-                          onClick={() => handleSelectedVariant(item._id, index)}
+                          onClick={() => handleSelectedVariant(item._id, index, item.quantity, item.name)}
                         />
                       ))
                     }
