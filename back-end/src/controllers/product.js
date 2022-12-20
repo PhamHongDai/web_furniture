@@ -163,7 +163,7 @@ exports.setDisableProductFasle = async (req, res) => {
     const {_id} = req.body;
     try {
         const products = await Product.findOneAndUpdate({_id}, {isDisabled: false});
-        getProduct(res);
+        getProductDisable(res);
     } catch (error) {
         res.status(400).json({error});
     }

@@ -32,6 +32,7 @@ const UpdateOrderDialog = ({
       const res = await dispatch(updateStatus(info));
       await dispatch(getAllOrders());
       setShowe((prev) => !prev);
+      toast.warn('Cập nhật trạng thái thành công')
     }
   }
   return (

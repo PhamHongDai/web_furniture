@@ -31,16 +31,6 @@ export const getProductBySlug = createAsyncThunk("product/getProductBySlug", asy
     }
 });
 
-export const getProductsByCategorySlug = createAsyncThunk("product/getProductsByCategorySlug", async (slug, rejectWithValue) => {
-    try {
-        const response = await productApi.getProductsByCategorySlug(slug);
-        return response;
-    }
-    catch (error) {
-        return rejectWithValue(error.response.data);
-    }
-});
-
 export const addProductReview = createAsyncThunk("product/addProductReview", async(review,  { rejectWithValue } ) => {
     try{
       const response = await productApi.addProductReview(review);
@@ -53,6 +43,17 @@ export const addProductReview = createAsyncThunk("product/addProductReview", asy
 export const setDisableProduct = createAsyncThunk("product/setDisableProduct", async(productId,  { rejectWithValue }) => {
     try {
         const response = await productApi.setDisableProduct(productId);
+        // await thunkAPI.dispatch(getProducts());
+        return response;
+    }
+    catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
+export const setDisableProductFasle = createAsyncThunk("product/setDisableProductFasle", async(productId,  { rejectWithValue }) => {
+    try {
+        const response = await productApi.setDisableProductFasle(productId);
         // await thunkAPI.dispatch(getProducts());
         return response;
     }
@@ -80,16 +81,6 @@ export const addProduct = createAsyncThunk("product/add", async(product,  { reje
     }
     catch (error) {
         return rejectWithValue(error.response.data);
-    }
-});
-
-export const getProductsSearched = createAsyncThunk("product/searchByProductName", async (text, rejectWithValue) => {
-    try {
-        const response = await productApi.searchByProductName(text);
-        return response;
-    }
-    catch (error) {
-        return rejectWithValue(error.response.data); 
     }
 });
 
@@ -126,6 +117,17 @@ export const productSlice = createSlice({
             state.loading = false;
             state.products = action.payload.data.products;
         },
+        [setDisableProductFasle.pending]: (state) => {
+            state.loading = true;
+        },
+        [setDisableProductFasle.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error;
+        },
+        [setDisableProductFasle.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.products = action.payload.data.products;
+        },
         [getProductBySlug.pending]: (state) => {
             state.loading = true;
         },
@@ -136,17 +138,6 @@ export const productSlice = createSlice({
         [getProductBySlug.fulfilled]: (state, action) => {
             state.loading = false;
             state.productDetail = action.payload.data.product;
-        },
-        [getProductsByCategorySlug.pending]: (state) => {
-            state.loading = true;
-        },
-        [getProductsByCategorySlug.rejected]: (state, action) => {
-            state.loading = false;
-            state.error = action.error;
-        },
-        [getProductsByCategorySlug.fulfilled]: (state, action) => {
-            state.loading = false;
-            state.products = action.payload.data.products;
         },
         [addProductReview.pending]: (state) => {
             state.loading = true;
@@ -168,8 +159,9 @@ export const productSlice = createSlice({
         },
         [setDisableProduct.fulfilled]: (state, action) => {
             state.loading = false;
-            state.products = action.payload.data.product;
+            state.products = action.payload.data.products;
         },
+        
         [updateProduct.pending]: (state) => {
             state.loading = true;
         },
@@ -191,17 +183,6 @@ export const productSlice = createSlice({
         [addProduct.fulfilled]: (state, action) => {
             state.loading = false;
             state.products = action.payload.data.products;
-        },
-        [getProductsSearched.pending]: (state) => {
-            state.loading = true;
-        },
-        [getProductsSearched.rejected]: (state, action) => {
-            state.loading = false;
-            state.error = action.error;
-        },
-        [getProductsSearched.fulfilled]: (state, action) => {
-            state.loading = false;
-            state.search = action.payload.data.products;
         },
     }
 });

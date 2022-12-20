@@ -251,9 +251,7 @@ const Header = () => {
                 <Menu className="menu">
                   {
                     user.role === 'admin' ? (
-                      <Link className="link" to="/password">
-                        Mật khẩu
-                      </Link>
+                      ""
                     ) : (
                       <>
                         <Link className="link" to="/profile">

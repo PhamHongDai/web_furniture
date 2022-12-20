@@ -62,17 +62,6 @@ export const sendOtpToEmail = createAsyncThunk(
   }
 );
 
-export const verifyOtp = createAsyncThunk(
-  "auth/verifyOtp",
-  async (user, { rejectWithValue }) => {
-    try {
-      const response = await authApi.verifyOtp(user);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
 export const updateForgetPassword = createAsyncThunk(
   "auth/updateForgetPassword",
   async (user, { rejectWithValue }) => {

@@ -315,7 +315,7 @@ const ProductDetail = () => {
                   <p style={{ color: "#999" }}>Chúng tôi cung cấp cho bạn chất lượng với sự tín nhiệm hoàn hảo!</p>
                 </div>
 
-                <motion.button onClick={handleAddCart} whileHover={{ scale: 1.2 }} className="buy__btn">Add to Cart</motion.button>
+                <motion.button onClick={handleAddCart} whileHover={{ scale: 1.2 }} className="buy__btn">Thêm vào giỏ hàng</motion.button>
               </div>
             </div>
           </div>

@@ -76,7 +76,7 @@ const createOutput = (OTP) => {
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 OTP will expire after 5 minutes
                                             </p>
-                                            <a href="https://doublet.vercel.app" style="cursor:pointer; background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">
+                                            <a href="" style="cursor:pointer; background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">
                                                 VISIT WEBSITE</a>
                                         </td>
                                     </tr>

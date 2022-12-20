@@ -6,8 +6,9 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import AddProductDialog from "../../components/UI/AddProductDialog";
-import { addProduct, setDisableProduct, getProductsDisable, getProducts, updateProduct } from "../../slices/productSlice";
+import { addProduct, setDisableProduct, getProductsDisable, getProducts, updateProduct, setDisableProductFasle } from "../../slices/productSlice";
 import { toast } from "react-toastify";
+import { getAllOrders } from "../../slices/orderSlice";
 
 const Container = styled.div`
   display: flex;
@@ -147,6 +148,7 @@ const Products = () => {
       const res = await dispatch(updateProduct(form));
       if (res.payload.status === 200) {
         toast.info("Sửa Thành Công !");
+        await dispatch(getAllOrders());
       }
     } catch (err) {
       toast.error("Vui lòng kiểm tra lại các thông tin cho chính xác !");
@@ -156,8 +158,16 @@ const Products = () => {
   const handleDeleteProduct = async (id) => {
     const response = await dispatch(setDisableProduct({"_id": id}));
     console.log(response);
-    if(response.status === 202){
+    if(response.payload.status === 200){
       toast.warning('Khóa Thành Công');
+    }
+  }
+
+  const handleSetProduct = async (id) => {
+    const response = await dispatch(setDisableProductFasle({"_id": id}));
+    console.log(response);
+    if(response.payload.status === 200){
+      toast.warning('Mở khóa Thành Công');
     }
   }
 
@@ -283,7 +293,11 @@ const Products = () => {
               <td><img src={item.productPictures[0]} alt=''></img></td>
               <td>
                 {
-                  isDisable ? ("") : (
+                  isDisable ? (
+                    <>
+                    <i className="ri-checkbox-line" onClick={() =>handleSetProduct(item._id)}></i>
+                    </>
+                  ) : (
                     <>
                       <i className="ri-edit-line" onClick={() => handleEditBtn(item)}></i>
                       <> </>

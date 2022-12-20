@@ -190,7 +190,7 @@ const AddProductDialog = ({
                   {(
                     variants.map((item, index) => (
                       <>
-                        <Col xs={12} md={5}>
+                        <Col xs={12} md={5} key={index}>
                           <Form.Group className="mb-3">
                             <Form.Control type="text" placeholder="Tên loại"
                               name="name"

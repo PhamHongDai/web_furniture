@@ -29,9 +29,9 @@ const Sidebar = () => {
             <NavLink to="/">
               <CDBSidebarMenuItem icon="columns">Bảng điều khiển</CDBSidebarMenuItem>
             </NavLink>
-            <a href="/products">
+            <NavLink to="/products">
               <CDBSidebarMenuItem icon="th-large">Sản phẩm</CDBSidebarMenuItem>
-            </a>
+            </NavLink>
             <NavLink to="/users">
               <CDBSidebarMenuItem icon="user">Người dùng</CDBSidebarMenuItem>
             </NavLink>

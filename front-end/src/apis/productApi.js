@@ -13,16 +13,16 @@ const productApi = {
         const url = `/product/${slug}`;
         return axios.get(url);
     },
-    getProductsByCategorySlug: (slug) => {
-        const url = `/product/${slug}/category`;
-        return axios.get(url);
-    },
     addProductReview: (review) => {
         const url = "/product/addProductReview";
         return axios.post(url, review);
     },
     setDisableProduct: (productId) => {
         const url = "/product/setDisableProduct";
+        return axios.post(url, productId)
+    },
+    setDisableProductFasle: (productId) => {
+        const url = "/product/setDisableProductFasle";
         return axios.post(url, productId)
     },
     updateProduct: (product) => {
@@ -32,10 +32,6 @@ const productApi = {
     addProduct: (product) => {
         const url = "/product/add";
         return axios.post(url, product)
-    },
-    searchByProductName: (text) => {
-        const url = "/product/searchByProductName";
-        return axios.post(url, {text})
     },
 };
 
