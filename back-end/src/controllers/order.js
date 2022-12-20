@@ -1,6 +1,6 @@
 const {Order, DeliveryInfo, Cart, Category, Product} = require("../models");
 
-exports.addOrder = (req, res) => {
+exports.addOrder = async (req, res) => {
     const {items, address, totalAmount, paymentStatus, paymentType} = req.body;
     const orderStatus = [
         {
@@ -22,8 +22,23 @@ exports.addOrder = (req, res) => {
         },
     ];
 
-    items.forEach((item) => {
-        Cart.updateOne(
+    let productId;
+    let variantId;
+    let quantity;
+    for (const item of items) {
+        productId = item.product
+        variantId = item.variant
+        quantity = item.quantity
+        Product.findOne({_id: productId})
+            .exec((error, product) => {
+                if (error) return res.status(400).json({error})
+                const foundVariant = product.variants.find(variant => variant._id == variantId)
+                if (foundVariant) {
+                    foundVariant.quantity = foundVariant.quantity - quantity
+                    product.save()
+                }
+            })
+        await Cart.updateOne(
             {user: req.user._id},
             {
                 $pull: {
@@ -36,7 +51,7 @@ exports.addOrder = (req, res) => {
         ).exec((error, result) => {
             if (error) return res.status(400).json({error});
         });
-    });
+    }
 
     const order = new Order({
         user: req.user._id,
@@ -76,8 +91,28 @@ exports.getOrder = (req, res) => {
 };
 
 exports.updateStatus = (req, res) => {
-    const {_id, type, oldType, paymentStatus} = req.body;
+    const {_id, type, oldType, paymentStatus, items} = req.body;
     console.log(_id, type, oldType, paymentStatus)
+    
+    if (paymentStatus === "cancelled"){
+        let productId;
+        let variantId;
+        let quantity;
+        for (const item of items) {
+            productId = item.product
+            variantId = item.variant
+            quantity = item.quantity
+            Product.findOne({_id: productId})
+                .exec((error, product) => {
+                    if (error) return res.status(400).json({error})
+                    const foundVariant = product.variants.find(variant => variant._id == variantId)
+                    if (foundVariant) {
+                        foundVariant.quantity = foundVariant.quantity + quantity
+                        product.save()
+                    }
+                })
+            }
+    }
     Order.findOneAndUpdate({_id: _id, "orderStatus.type": oldType},
         {
             $set: {
