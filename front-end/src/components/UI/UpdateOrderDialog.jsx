@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { getAllOrders, updateStatus } from '../../slices/orderSlice';
+import { getProducts } from '../../slices/productSlice';
 
 const UpdateOrderDialog = ({
   showe,
@@ -27,12 +28,18 @@ const UpdateOrderDialog = ({
         _id: orderInfo._id,
         type: orderInfo.orderStatus,
         oldType: orderInfo.oldType,
-        paymentStatus: orderInfo.paymentStatus
+        paymentStatus: orderInfo.paymentStatus,
+        items: orderInfo.items,
       }
       const res = await dispatch(updateStatus(info));
-      await dispatch(getAllOrders());
-      setShowe((prev) => !prev);
-      toast.warn('Cập nhật trạng thái thành công')
+      console.log(res);
+      if(res.payload.status === 200)
+      {
+        await dispatch(getAllOrders());
+        await dispatch(getProducts());
+        setShowe((prev) => !prev);
+        toast.warn('Cập nhật trạng thái thành công')
+      }
     }
   }
   return (

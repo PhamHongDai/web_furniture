@@ -99,7 +99,7 @@ exports.updateStatus = (req, res) => {
         let variantId;
         let quantity;
         for (const item of items) {
-            productId = item.product
+            productId = item.product._id
             variantId = item.variant
             quantity = item.quantity
             Product.findOne({_id: productId})
