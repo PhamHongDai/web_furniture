@@ -97,17 +97,19 @@ const Checkout = () => {
   const shippingFee = 30000;
 
   const setDefaultDeliveryInfo = () => {
-    if (deliveryInfo.address.length !== 0) {
-      const defaultAddress = deliveryInfo.address.find(
-        (add) => add.isDefault === true
-      );
-      if (defaultAddress) {
-        setAddress({_id: defaultAddress._id, name: defaultAddress.name, phone: defaultAddress.phoneNumber, address: defaultAddress.address});
-      } else {
-        setAddress({_id: deliveryInfo.address[0]._id, name: deliveryInfo.address[0].name, phone: deliveryInfo.address[0].phoneNumber, address: deliveryInfo.address[0].address});
+    if (deliveryInfo.address){
+      if (deliveryInfo.address.length !== 0) {
+        const defaultAddress = deliveryInfo.address.find(
+          (add) => add.isDefault === true
+        );
+        if (defaultAddress) {
+          setAddress({_id: defaultAddress._id, name: defaultAddress.name, phone: defaultAddress.phoneNumber, address: defaultAddress.address});
+        } else {
+          setAddress({_id: deliveryInfo.address[0]._id, name: deliveryInfo.address[0].name, phone: deliveryInfo.address[0].phoneNumber, address: deliveryInfo.address[0].address});
+        }
       }
+    };
     }
-  };
 
   const totalPrice = orderItems.reduce((total, priceItem) => {
     total +=
@@ -190,7 +192,15 @@ const Checkout = () => {
               {
                 loading ? (
                   <div className="notifi__block">Loading...</div>
-                ) : (deliveryInfo.address.length !== 0)  ? (
+                ) : deliveryInfo.address?.length === 0 || 
+                  deliveryInfo.address === undefined  ? (
+                    <div className="notifi__block">
+                      Vui lòng thêm địa chỉ giao hàng.
+                      <Link to="/delivery">
+                        Tại đây!
+                      </Link>
+                    </div>
+                  ) : (
                   <div className="y">
                     <div className="item-x">
                       <label>Họ và Tên:</label>
@@ -214,13 +224,6 @@ const Checkout = () => {
                         </select>
                       </span>
                     </div>
-                  </div>
-                ) :  (
-                  <div className="notifi__block">
-                    Vui lòng thêm địa chỉ giao hàng.
-                    <Link to="/delivery">
-                      Tại đây!
-                    </Link>
                   </div>
                 )
               }

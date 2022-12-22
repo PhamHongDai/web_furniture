@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import ProductList from "../../components/UI/ProductList";
 import { useEffect } from "react";
-import { addToCart } from "../../slices/cartSlice";
+import { addToCart, getCartItems } from "../../slices/cartSlice";
 import { toast } from "react-toastify";
 import { addProductReview } from "../../slices/productSlice";
 const Wrapper = styled.section`
@@ -229,6 +229,7 @@ const ProductDetail = () => {
     } else {
       try {
         const res = await dispatch(addToCart({ cartItem: cartItem }));
+        await dispatch(getCartItems());
         toast.success("Đã thêm vào giỏ hàng")
       }
       catch (error) {
